@@ -7,7 +7,6 @@ Crafty.c("Player", {
 	//Score
 	score : 666, //TODO: logic to calc score
 	init : function() {
-		var stage = $('#cr-stage');
 		var keyDown = false;
 
 		var jump = false;
@@ -26,7 +25,11 @@ Crafty.c("Player", {
 		var playerPaused = false;
 
 		//this.addComponent("2D, DOM, player, SpriteAnimation, Keyboard, Collision, Gravity")
-		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker").animate("run", 0, 0, 15).animate("dummy", 0, 0, 23).animate("jump", 8, 0, 37).gravity("Platform")//Component that stops gravity
+		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker")
+			.animate("run", 0, 0, 15)
+			.animate("dummy", 0, 0, 23)
+			.animate("jump", 8, 0, 37)
+			.gravity("Platform")//Component that stops gravity
 		//.gravityConst(1) //Default value is 2
 		.attr({
 			x : 90,
@@ -34,7 +37,7 @@ Crafty.c("Player", {
 			w : 128,
 			h : 148,
 			z : 1000
-		}).bind("EnterFrame", function(frame) {
+		}).bind("EnterFrame", function() {
 
 			//Update player speed
 			if(Crafty.frame() % 29 === 0) {

@@ -1,6 +1,5 @@
 Crafty.c("Floor", {
 	init: function(){
-		      var stage = $('#cr-stage');
 		      this.addComponent("2D,DOM,floor");
 	      }
 });
@@ -14,7 +13,6 @@ Crafty.c("Background", {
 		      var backgroundHeight = 160;
 		      var midgroundWidth = 480;
 
-		      var stage = $('#cr-stage');
 		      this.addComponent("2D, DOM, Image").image("assets/background.png", "repeat-x")
 			//.attr({x:0, y:0, w: Crafty.viewport.width, h:320 })
 			.attr({x:0, y:0, w: Crafty.viewport.width*2, h:160 })
@@ -41,7 +39,7 @@ Crafty.c("Midground", {
 		      var backgroundHeight = 160;
 		      var midgroundWidth = 480;
 
-		      var stage = $('#cr-stage');
+
 			this.addComponent("2D, DOM, Image").image("assets/midground1.png", "repeat-x")
 			.attr({x:0, y: backgroundHeight/2-25, w: Crafty.viewport.width*2, h:480 })
 
@@ -115,4 +113,29 @@ Crafty.c("Obstacle", {
 		
 	}
 	
+});
+
+Crafty.c("RabidBunch", {
+	init: function(){
+		this.addComponent("2D, DOM, Image")
+			.image("assets/img/dummy-bunch.png")
+			.attr( {x: 0,y: 200, h: 120, w: 190})	
+			
+			.bind("EnterFrame",function(){
+				this.x = this.x + Crafty.viewport.x;
+			})	
+	}
+});
+
+Crafty.c("Chainsaw", {
+	//TODO: Descending animation
+	init: function(){
+		this.addComponent("2D, DOM, Image")
+			.image("assets/img/dummy-chainsaw.png")
+			.attr( {x: 300,y: 0, h: 120, w: 190})	
+			
+			.bind("EnterFrame",function(){
+				this.x = this.x + Crafty.viewport.x;
+			})		
+	}
 });

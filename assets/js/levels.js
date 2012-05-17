@@ -201,13 +201,16 @@ Crafty.scene("Stage1", function(){
 	//Set player into the scene
 	var player = Crafty.e("Player")
 		.animate("dummy",120,-1);
+		
 
-	//Load background
-	Crafty.background("black");
-	var bckGround = Crafty.e("Background");
 
+	//Load Parallax background elements
+	//Crafty.background("black");
+	Crafty.e("Background");
 	Crafty.e("Midground");
 
+	Crafty.e("Chainsaw");
+	Crafty.e("RabidBunch");	
 
 	//Experiments with viewport
 	//Crafty.viewport.scroll('_x',-300);
