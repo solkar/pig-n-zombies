@@ -49,3 +49,17 @@ Crafty.c("Blown", {
 		});
 	}
 })
+
+Crafty.c("Rumble",{
+	rumble: false,
+	init: function(){
+		this.bind("EnterFrame", function(){
+			if(frame.frame % 3 === 0 && this.rumble){
+				this.move("nw",3);
+			}else if(frame.frame % 2 === 0 && this.rumble){
+				this.move("se",3);
+			}
+		})
+		
+	}
+})
