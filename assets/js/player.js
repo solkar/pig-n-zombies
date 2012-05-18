@@ -1,6 +1,6 @@
 Crafty.c("Player", {
 	//Player scroll speed controls
-	x_speed : 4,
+	x_speed : 1,
 	_minSpeed : 1,
 	_maxSpeed : 5,
 	_speedShift : 1,
@@ -16,7 +16,7 @@ Crafty.c("Player", {
 		var jumpBase = 0;
 		//var jumpHeight = 30;//without Gravity
 		var jumpHeight = 20;
-		var hSpeed = 4;
+		//var hSpeed = 1;
 		//TODO: Remove, deprecated
 
 		var falling = true;

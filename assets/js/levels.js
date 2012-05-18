@@ -191,13 +191,22 @@ Crafty.scene("Stage1", function(){
 	//Reset viewport
 	Crafty.viewport.x = 0;
 
-	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/stage1.json","")
+	//Current tilemap
+	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/motherTileMap01.json","")
 		.bind("EnterFrame", function(){
 			//Crafty.viewport.x = Crafty.viewport.x - 4; //Scroll pos X at 1px/frame
 			//Crafty.viewport.scroll('_x', -1);//Doesn't work
 			Crafty.viewport.x = Crafty.viewport.x - scrollSpeed; 
 		});
 		
+	//Next tilemap to appear
+	var tileMap2 = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/motherTileMap01.json","")
+	.attr({y: 300})
+	.bind("EnterFrame", function(){
+		//this.x = tCrafty.viewport.x - scrollSpeed;
+	});
+	
+	
 	//Set player into the scene
 	var player = Crafty.e("Player")
 		.animate("dummy",120,-1);
@@ -209,6 +218,7 @@ Crafty.scene("Stage1", function(){
 	Crafty.e("Background");
 	Crafty.e("Midground");
 
+	
 	Crafty.e("Chainsaw");
 	Crafty.e("RabidBunch");	
 
