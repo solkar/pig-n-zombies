@@ -121,9 +121,20 @@ Crafty.c("RabidBunch", {
 			.image("assets/img/dummy-bunch.png")
 			.attr( {x: 0,y: 200, h: 120, w: 190})	
 			
-			.bind("EnterFrame",function(){
+			.bind("EnterFrame",function(frame){
 				this.x = 0 - Crafty.viewport.x;
+				
+				if(frame.frame % 2 == 0){
+					this.move("ne",2);
+				}else{
+					this.move("sw", 2);
+				}
+				
 			})	
+			
+			.bind("Dash", function() {
+			  
+			})
 	}
 });
 
