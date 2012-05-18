@@ -129,14 +129,15 @@ Crafty.c("RabidBunch", {
 
 Crafty.c("Chainsaw", {
 	//TODO: Randomize intial x value
-	ceilingPosition: 300,
+	ceilingPosition: 600,
 	descending: true,
 	assetHeight: 180,
 	assetWidth: 200,
 	descendSpeed: 3,
+	descendHeight: 150,//0,
 	
 	init: function(){
-		this.addComponent("2D, DOM, Image, Flicker")
+		this.addComponent("2D, DOM, Image, Flicker, Rumble, Collision")
 			.image("assets/img/dummy-chainsaw.png")
 			.attr( {x: this.ceilingPosition,
 				y: -this.assetHeight, 
@@ -146,7 +147,8 @@ Crafty.c("Chainsaw", {
 			.bind("EnterFrame",function(){
 				if(this.descending === true){
 					this.flicker = true;
-					if(this.y < 0){
+					//this.rumble = true;
+					if(this.y < this.descendHeight){
 						this.shift(0,this.descendSpeed);
 					}else{
 						this.descending = false;
@@ -154,6 +156,7 @@ Crafty.c("Chainsaw", {
 					this.x = this.ceilingPosition - Crafty.viewport.x;
 				}else{
 					this.flicker = false;
+					this.rumble = true;
 					if(this.x + this.w < Crafty.viewport.x){
 						this.destroy();
 					}

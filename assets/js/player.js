@@ -25,11 +25,7 @@ Crafty.c("Player", {
 		var playerPaused = false;
 
 		//this.addComponent("2D, DOM, player, SpriteAnimation, Keyboard, Collision, Gravity")
-		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker")
-			.animate("run", 0, 0, 15)
-			.animate("dummy", 0, 0, 23)
-			.animate("jump", 8, 0, 37)
-			.gravity("Platform")//Component that stops gravity
+		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker").animate("run", 0, 0, 15).animate("dummy", 0, 0, 23).animate("jump", 8, 0, 37).gravity("Platform")//Component that stops gravity
 		//.gravityConst(1) //Default value is 2
 		.attr({
 			x : 90,
@@ -41,7 +37,7 @@ Crafty.c("Player", {
 
 			//Update player speed
 			if(Crafty.frame() % 29 === 0) {
-				console.log("Pace Increased!!!\n");
+				//console.log("Pace Increased!!!\n");
 				this.trigger("IncreasePace");
 			}
 
@@ -115,6 +111,22 @@ Crafty.c("Player", {
 			}, 1500);
 
 			this.trigger("ReducePace");
+		})
+		//Chainsaw chops player
+		.onHit("Chainsaw", function() {
+			//TODO: add animation
+			//this.animate("chopped", 120,1);
+
+			//Animation alternative
+			var banner = this.addComponent("Image").image("assets/img/chopped_banner.png");
+
+			//set punctuation
+			this.delay(function() {
+
+				Crafty.trigger("GameOver", this.score);
+				this.trigger("ResetPlayer");
+
+			}, 1500);
 		}).bind("ReducePace", function() {
 			//TODO: load KO animation
 
@@ -123,7 +135,7 @@ Crafty.c("Player", {
 				this.x_speed = this.x_speed - this._speedShift;
 				Crafty.trigger("UpdateSceneSpeed", this.x_speed);
 				//Update tilemap scroll speed to have both in sync
-				console.log("Speed down to"+this.x_speed+"\n");
+				console.log("Speed down to" + this.x_speed + "\n");
 
 			}
 		}).bind("IncreasePace", function() {
@@ -131,7 +143,7 @@ Crafty.c("Player", {
 			if(this.x_speed < this._maxSpeed) {
 				this.x_speed = this.x_speed + this._speedShift;
 				Crafty.trigger("UpdateSceneSpeed", this.x_speed);
-				console.log("Speed up to"+this.x_speed+"\n");
+				console.log("Speed up to" + this.x_speed + "\n");
 			}
 		})
 		//Death behaviours
@@ -159,7 +171,8 @@ Crafty.c("Player", {
 				w : 128,
 				h : 148,
 				z : 1000
-			})
+			});
+			this.animate("dummy",120,-1);
 
 		});
 	}

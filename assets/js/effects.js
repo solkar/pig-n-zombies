@@ -53,12 +53,17 @@ Crafty.c("Blown", {
 Crafty.c("Rumble",{
 	rumble: false,
 	init: function(){
-		this.bind("EnterFrame", function(){
+		this.bind("EnterFrame", function(frame){
 			if(frame.frame % 3 === 0 && this.rumble){
-				this.move("nw",3);
+				this.move("nw",5);
 			}else if(frame.frame % 2 === 0 && this.rumble){
-				this.move("se",3);
+				this.move("se",5);
 			}
+			//else if(frame.frame % 4 === 0 && this.rumble){
+			//	this.move("sw",5);
+			//}else if(frame.frame % 5 ===0 && this.rumble){
+			//	this.move("ne",5);
+			//}
 		})
 		
 	}
