@@ -2,7 +2,7 @@ Crafty.c("Player", {
 	//Player scroll speed controls
 	x_speed : 1,
 	_minSpeed : 1,
-	_maxSpeed : 5,
+	_maxSpeed : 15,
 	_speedShift : 1,
 	//Score
 	score : 666, //TODO: logic to calc score
@@ -11,11 +11,11 @@ Crafty.c("Player", {
 
 		var jump = false;
 		//var jumpSpeed = 5; //with Gravity
-		var jumpSpeed = 2;
+		var jumpSpeed = 5;
 		//without Gravity
 		var jumpBase = 0;
 		//var jumpHeight = 30;//without Gravity
-		var jumpHeight = 20;
+		var jumpHeight = 70;
 		//var hSpeed = 1;
 		//TODO: Remove, deprecated
 
@@ -28,7 +28,7 @@ Crafty.c("Player", {
 		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker").animate("run", 0, 0, 15).animate("dummy", 0, 0, 23).animate("jump", 8, 0, 37).gravity("Platform")//Component that stops gravity
 		//.gravityConst(1) //Default value is 2
 		.attr({
-			x : 90,
+			x : 200,
 			y : 90,
 			w : 128,
 			h : 148,
@@ -63,7 +63,8 @@ Crafty.c("Player", {
 
 			//Player advances
 			if(playerPaused != true) {
-				this.x = this.x + this.x_speed;
+				//this.x = this.x + this.x_speed; //Original control
+				this.x = 180 + this.x_speed - Crafty.viewport.x;
 			}
 
 			//Deprecated by Gravity component

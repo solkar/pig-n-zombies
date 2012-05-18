@@ -116,25 +116,57 @@ Crafty.c("Obstacle", {
 });
 
 Crafty.c("RabidBunch", {
+	//TODO: resettle Rabids after they fall or when they are blocked
+	dash: false,
+	x_shift: -110,
 	init: function(){
-		this.addComponent("2D, DOM, Image")
+		this.addComponent("2D, DOM, Image, Gravity")
+			.gravity("Platform")
 			.image("assets/img/dummy-bunch.png")
 			.attr( {x: 0,y: 200, h: 120, w: 190})	
 			
 			.bind("EnterFrame",function(frame){
-				this.x = 0 - Crafty.viewport.x;
+				//this.x = 0 - Crafty.viewport.x;
+				this.x = this.x_shift - Crafty.viewport.x;
 				
-				if(frame.frame % 2 == 0){
-					this.move("ne",2);
-				}else{
-					this.move("sw", 2);
+				
+				//Run effect
+				if(frame.frame % 16 === 0){
+					this.move("ne", 3);
+				}else if (frame.frame % 8 === 0){
+					this.move("sw", 3);
+				}
+				
+				//Dash effect
+				if(frame.frame % 2 === 0 ){
+
+					if(this.dash === true) {
+						if(this.x + Crafty.viewport.x < 0) {
+							//this.delay(function() {
+							this.x_shift = this.x_shift + 9;
+							//Disable effect
+							//}, 1500);
+						} else if(this.x + Crafty.viewport.x >= 0) {
+							this.dash = false;
+						}
+					} else if(this.dash === false && this.x_shift > -110){
+						this.x_shift = this.x_shift - 1;
+					}
+
+				}
+				
+				
+				
+				
+				//Effect triggers
+				//if(frame.frame % 30 === 0){
+				if(frame.frame % 290 === 0){
+					this.trigger("Dash");
+					this.dash = true;
 				}
 				
 			})	
 			
-			.bind("Dash", function() {
-			  
-			})
 	}
 });
 
