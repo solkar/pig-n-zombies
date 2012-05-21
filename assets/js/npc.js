@@ -124,52 +124,69 @@ Crafty.c("RabidBunch", {
 		this.addComponent("2D, DOM, Image, Gravity")
 			.gravity("Platform")
 			.image("assets/img/dummy-bunch.png")
-			.attr( {x: 0,y: 200, h: 120, w: 190})	
+			.attr( {x: -110,y: 400, h: 120, w: 190})	
 			
 			.bind("EnterFrame",function(frame){
 				//this.x = 0 - Crafty.viewport.x;
 				this.x = this.x_shift - Crafty.viewport.x;
 				
 				
-				//Run effect
+				//Run visual effect
 				if(frame.frame % 16 === 0){
 					this.move("ne", 3);
 				}else if (frame.frame % 8 === 0){
 					this.move("sw", 3);
 				}
 				
-				//Dash effect
-				if(frame.frame % 2 === 0 ){
-
-					if(this.dash === true) {
-						if(this.x + Crafty.viewport.x < 0) {
-							//this.delay(function() {
-							this.x_shift = this.x_shift + 9;
-							//Disable effect
-							//}, 1500);
-						} else if(this.x + Crafty.viewport.x >= 0) {
-							this.dash = false;
-						}
-					} else if(this.dash === false && this.x_shift > -110){
-						this.x_shift = this.x_shift - 1;
-					}
-
-				}
-				
-				
-				
-				
-				//Effect triggers
-				//if(frame.frame % 30 === 0){
+//				//Rabid Sprint
+//				if(frame.frame % 2 === 0 ){
+//
+//					if(this.dash === true) {
+//						if(this.x + Crafty.viewport.x < 0) {
+//							//this.delay(function() {
+//							this.x_shift = this.x_shift + 9;
+//							//Disable effect
+//							//}, 1500);
+//						} else if(this.x + Crafty.viewport.x >= 0) {
+//							this.dash = false;
+//						}
+//					} else if(this.dash === false && this.x_shift > -110){
+//						this.x_shift = this.x_shift - 1;
+//					}
+//
+//				}
+//				
+				//TODO: change spawning trigger
 				if(frame.frame % 290 === 0){
-					this.trigger("Dash");
+					this.sprint();
 					this.dash = true;
 				}
 				
 			})	
 			
+	},
+	
+	sprint: function(){
+		this.bind("EnterFrame", function(frame){
+			if(frame.frame % 2 === 0 ){
+
+				if(this.dash === true) {
+					if(this.x + Crafty.viewport.x < 0) {
+						//this.delay(function() {
+						this.x_shift = this.x_shift + 9;
+						//Disable effect
+						//}, 1500);
+					} else if(this.x + Crafty.viewport.x >= 0) {
+						this.dash = false;
+					}
+				} else if(this.dash === false && this.x_shift > -110){
+					this.x_shift = this.x_shift - 1;
+				}
+
+			}
+		})
 	}
-});
+})
 
 Crafty.c("Chainsaw", {
 	//TODO: Randomize intial x value
