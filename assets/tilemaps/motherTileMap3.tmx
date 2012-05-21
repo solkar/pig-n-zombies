@@ -4,18 +4,18 @@
   <image source="../../../../../Desktop/Desktop1.png" trans="ff00ff" width="128" height="128"/>
   <tile id="0">
    <properties>
-    <property name="components" value="Platform"/>
+    <property name="components" value="Platform, Solid"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
-    <property name="components" value="Obstacles"/>
+    <property name="components" value="Obstacle"/>
    </properties>
   </tile>
  </tileset>
  <layer name="Tile Layer 1" width="250" height="18">
   <data encoding="base64" compression="zlib">
-   eJzt00EOgCAMAEHk/4/26gElEbVQZ5IeQVS2FAAAAAAA4I7tMEBOOof8dA756Rzy0znkp3PIT+eQn85hLVtnemuA+WXtvEYfIEgt/333P+j1etblF51H3LtV7vrTXa7U+SrnnElU58a0puWtfUef9fSeV+vunnH0O43+rx3yeQE+
+   eJzt00kOgCAQAEH0/4/26gElrgNDVTJHtoQuBQAAAAAAuGPZDZCTziE/nUN+Oof8dA756Rzy0znkp3MYy9KY1hqgf1k7X6MvEGQt8759Bq1ej7r8o/OIfzfKX3+7y5E6H+WePYnq3Jja1Hy179Oz3t7zbN2V/b66w52zNu/lATk=
   </data>
  </layer>
 </map>
