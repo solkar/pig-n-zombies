@@ -28,17 +28,17 @@ Crafty.scene("Stage1", function(){
 	Crafty.viewport.x = 0;
 	
 	//Current tilemap
-	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/motherTileMap03.json","");
+	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/jump_collision_test_level.json","");
 	//var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/stage1.json","");	
 	
 	tileMap.bind("EnterFrame", function(){
 			Crafty.viewport.x = Crafty.viewport.x - scrollSpeed;
 			//console.log("x:"+Crafty.viewport.x + "\n"); 
-			if(Crafty.viewport.x < -2500){
+			if(Crafty.viewport.x < -8200){
 					//viewport.x = 0;
 					//Crafty.removeComponent("Player",true);
 					
-					Crafty.viewport.x = Crafty.viewport.x + 2500;
+					Crafty.viewport.x = Crafty.viewport.x + 8200;
 					//Crafty("Player").x = 00;
 			}
 		});
@@ -59,10 +59,10 @@ Crafty.scene("Stage1", function(){
 
 	//Load Parallax background elements
 	//Crafty.background("black");
-	Crafty.e("Background");
-	Crafty.e("Midground");
+	//Crafty.e("Background");
+	//Crafty.e("Midground");
 	
-	Crafty.e("Chainsaw");
+	//Crafty.e("Chainsaw");
 	Crafty.e("RabidBunch");	
 
 	//I am not sure it this is the best place for this logic

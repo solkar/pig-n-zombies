@@ -93,7 +93,8 @@ Crafty.c("SplashBackground", {
 
 Crafty.c("Obstacle", {
 	init: function(){
-		this.addComponent("DOM, Flicker, Blown") //Image is loaded with the tilemap
+		this.addComponent("DOM, Flicker, Blown, Gravity") //Image is loaded with the tilemap
+		.gravity("Platform")
 		//TODO: select obstacle tile randomly
 
 		//When player touchs it, obstacle is blown away and disappers 
