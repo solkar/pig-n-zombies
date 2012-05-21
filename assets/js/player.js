@@ -1,6 +1,9 @@
 Crafty.c("Player", {
 	//Player scroll speed controls
 	x_speed : 1,
+	MAX_EDGE_DISTANCE: 280,
+	edge_distance: 100, //TODO: Fix, less than 185 triggers collision with RabidBunch
+	obstacle_penalization: 30,
 	_minSpeed : 1,
 	_maxSpeed : 15,
 	_speedShift : 1,
@@ -28,12 +31,13 @@ Crafty.c("Player", {
 		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker").animate("run", 0, 0, 15).animate("dummy", 0, 0, 23).animate("jump", 8, 0, 37).gravity("Platform")//Component that stops gravity
 		//.gravityConst(1) //Default value is 2
 		.attr({
-			x : 200,
-			y : 90,
+			x : this.edge_distance,
+			y : 290,
 			w : 128,
 			h : 148,
 			z : 1000
-		}).bind("EnterFrame", function() {
+		})
+		.bind("EnterFrame", function() {
 
 			//Update player speed
 			if(Crafty.frame() % 29 === 0) {
@@ -64,7 +68,7 @@ Crafty.c("Player", {
 			//Player advances
 			if(playerPaused != true) {
 				//this.x = this.x + this.x_speed; //Original control
-				this.x = 180 + this.x_speed - Crafty.viewport.x;
+				this.x = this.edge_distance + this.x_speed - Crafty.viewport.x; //Treadmill mode
 			}
 
 			//Deprecated by Gravity component
@@ -100,19 +104,26 @@ Crafty.c("Player", {
 		}).onHit("Platform", function(e) {
 			jump = false;
 		})
-		//Behaviour when hitting an obstacle
+		
+		//Player staggers and reduce the pace when hitting an obstacle
 		.onHit("Obstacle", function(e) {
 			console.log("Stumble upon object!");
 
 			//TODO: load treppling animation
-			//Apply flicker
+			//Alternative Apply flicker
 			this.flicker = true;
 			this.delay(function() {
 				this.flicker = false;
 			}, 1500);
 
+			//Call recude pace method
 			this.trigger("ReducePace");
+			
+			//Rabid bunch approachs 
+			Crafty("RabidBunch").trigger("GainTerrain");
+			
 		})
+		
 		//Chainsaw chops player
 		.onHit("Chainsaw", function() {
 			//TODO: add animation
@@ -128,8 +139,24 @@ Crafty.c("Player", {
 				this.trigger("ResetPlayer");
 
 			}, 1500);
-		}).bind("ReducePace", function() {
-			//TODO: load KO animation
+		})
+		
+		.onHit("RabidBunch", function(){
+			
+			//Animation alternative
+			var banner = this.addComponent("Image").image("assets/img/chopped_banner.png");
+			
+			//set score
+			this.delay(function() {
+		
+				Crafty.trigger("GameOver", this.score);
+				//this.trigger("ResetPlayer");
+		
+				}, 1500);
+		})
+		
+		.bind("ReducePace", function() {
+			//TODO: load stagger animation
 
 			//Reduce player speed
 			if(this.x_speed > this._minSpeed) {
@@ -137,14 +164,22 @@ Crafty.c("Player", {
 				Crafty.trigger("UpdateSceneSpeed", this.x_speed);
 				//Update tilemap scroll speed to have both in sync
 				console.log("Speed down to" + this.x_speed + "\n");
-
+						
 			}
-		}).bind("IncreasePace", function() {
+			
+			this.edge_distance = this.edge_distance - this.obstacle_penalization; //Penalize player for hitting an obstacle
+		})
+		
+		.bind("IncreasePace", function() {
 			//Top speed 5 px/frame
 			if(this.x_speed < this._maxSpeed) {
 				this.x_speed = this.x_speed + this._speedShift;
 				Crafty.trigger("UpdateSceneSpeed", this.x_speed);
 				console.log("Speed up to" + this.x_speed + "\n");
+			}
+			
+			if(this.edge_distance < this.MAX_EDGE_DISTANCE){
+				this.edge_distance = this.edge_distance + this.obstacle_penalization/2;
 			}
 		})
 		//Death behaviours
@@ -160,12 +195,18 @@ Crafty.c("Player", {
 			//set punctuation
 			this.trigger("ResetPlayer");
 
-		}).bind("HumanEaten", function() {
-		}).bind("PausePlayer", function() {
+		})
+		.bind("HumanEaten", function() {
+		})
+		.bind("PausePlayer", function() {
 			playerPaused = true;
-		}).bind("PlayPlayer", function() {
+		})
+		
+		.bind("PlayPlayer", function() {
 			playerPaused = false;
-		}).bind("ResetPlayer", function() {
+		})
+		
+		.bind("ResetPlayer", function() {
 			this.attr({
 				x : 90,
 				y : 90,

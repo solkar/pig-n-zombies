@@ -31,14 +31,16 @@ Crafty.scene("Stage1", function(){
 	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/motherTileMap03.json","");
 	//var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/stage1.json","");	
 	
+
+	
 	tileMap.bind("EnterFrame", function(){
 			Crafty.viewport.x = Crafty.viewport.x - scrollSpeed;
 			//console.log("x:"+Crafty.viewport.x + "\n"); 
-			if(Crafty.viewport.x < -2500){
+			if(Crafty.viewport.x < -3500){
 					//viewport.x = 0;
 					//Crafty.removeComponent("Player",true);
 					
-					Crafty.viewport.x = Crafty.viewport.x + 2500;
+					Crafty.viewport.x = Crafty.viewport.x + 3500;
 					//Crafty("Player").x = 00;
 			}
 		});
@@ -56,11 +58,29 @@ Crafty.scene("Stage1", function(){
 		.animate("dummy",120,-1);
 		
 
+	//Get all the entities with "MapTile" component
+	var tileList = Crafty("2D Maptile"); //Returns 0
+	var j;
+	
+	for(j=0; j < 102; j += 1)
+	{
+		console.log(tileList[j]);
+		tileList[j].destroy();
+	}
+
+	//Create a pitfall dynamically
+	var i;
+	
+	for(i = 20; i <= 2799; i += 1)
+	{
+		Crafty("tileSprite"+i).destroy();
+		Crafty("Player").destroy();
+	}
 
 	//Load Parallax background elements
 	//Crafty.background("black");
-	Crafty.e("Background");
-	Crafty.e("Midground");
+	//Crafty.e("Background");
+	//Crafty.e("Midground");
 	
 	Crafty.e("Chainsaw");
 	Crafty.e("RabidBunch");	
