@@ -103,10 +103,30 @@ Crafty.c("Player", {
 		})
 		//Behaviour when there is solid floor below
 		.onHit("Solid", function(e) {
-			falling = false;
+			//Debugging only: mark collision
+			this.flicker = true;
+			
+			//this.trigger("PitFall"); 
+			
+			//TODO: Free fall
+			
+			//Stop player side-scroll
+			this.x_speed = 0;
+			Crafty.trigger("UpdateSceneSpeed", this.x_speed);
+			
+			//Free fall
+			this.gravity(""); //Disable Platform as support for player
+			this.gravityConst(0.6); //Fall faster
+			
+		
+			//this.gravity(""); //Platoform doesn't supports player anymore
+			
+			//TODO: stop player scroll
 			jump = false;
 		}).onHit("Platform", function(e) {
-			jump = false;
+			this.delay(function(){
+				this.flicker = false;
+			},1000);
 		})
 		
 		//Player staggers and reduce the pace when hitting an obstacle
