@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="100" height="18" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="250" height="18" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="Desktop1" tilewidth="32" tileheight="32">
   <image source="../../../../../Desktop/Desktop1.png" trans="ff00ff" width="128" height="128"/>
   <tile id="0">
@@ -13,9 +13,9 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Tile Layer 1" width="100" height="18">
+ <layer name="Tile Layer 1" width="250" height="18">
   <data encoding="base64" compression="zlib">
-   eJztzsEJAAAIAzF1/6HdQXwIJnDvNgIAAAAAAOCferI5tfk1daoGecgAaw==
+   eJzt00EOgCAMAEHk/4/26gElEbVQZ5IeQVS2FAAAAAAA4I7tMEBOOof8dA756Rzy0znkp3PIT+eQn85hLVtnemuA+WXtvEYfIEgt/333P+j1etblF51H3LtV7vrTXa7U+SrnnElU58a0puWtfUef9fSeV+vunnH0O43+rx3yeQE+
   </data>
  </layer>
 </map>
