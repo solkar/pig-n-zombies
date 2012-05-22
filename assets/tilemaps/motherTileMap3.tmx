@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="250" height="18" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="500" height="18" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="Desktop1" tilewidth="32" tileheight="32">
   <image source="../../../../../Desktop/Desktop1.png" trans="ff00ff" width="128" height="128"/>
   <tile id="0">
@@ -13,9 +13,9 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Tile Layer 1" width="250" height="18">
+ <layer name="Tile Layer 1" width="500" height="18">
   <data encoding="base64" compression="zlib">
-   eJzt00kOgCAQAEH0/4/26gElrgNDVTJHtoQuBQAAAAAAuGPZDZCTziE/nUN+Oof8dA756Rzy0znkp3MYy9KY1hqgf1k7X6MvEGQt8759Bq1ej7r8o/OIfzfKX3+7y5E6H+WePYnq3Jja1Hy179Oz3t7zbN2V/b66w52zNu/lATk=
+   eJzt3NEKwjAMBVD1/z/aF59EcWTNbmvPgbzJTOyaFAe73YB/dF8kAIDv0nPaPAcAAAAAAAAAAAAAAAAAAFjf4xW/PgMA9Eq/J6b7fTLOEwDsID2nq/N8pjPDUUf+zwCAivScXmWep+vvOpOk8x1dzzfv56gjz4nOnL2c24AzKr0x3a+rff3q2ZGuv2v+pfPdYU1mC2B+lX2c7i3VHnR1n0vX39Wr0/nusCazxax2/U/Dc7j/Vt2XlX2c7i1dtY7uc+n6u3p1Ot8d1mS2mNUqM230/F1pnq+S50yq+7Kyj9O9pavW0X0uXX9Xr07nu8OaCLFCfNJ13bPfNfqao643MofUeiXutavu59V/p1/S+e6wJrPFE7X4Bsw=
   </data>
  </layer>
 </map>
