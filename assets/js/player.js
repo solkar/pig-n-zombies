@@ -2,11 +2,12 @@ Crafty.c("Player", {
 	//Player scroll speed controls
 	x_speed : 1,
 	MAX_EDGE_DISTANCE: 280,
-	edge_distance: 184, //180 collision with RabidBunch
+	edge_distance: 185, //180 collision with RabidBunch
 	obstacle_penalization: 30,
 	_minSpeed : 1,
 	_maxSpeed : 15,
 	_speedShift : 1,
+	
 	//Score
 	score : 666, //TODO: logic to calc score
 	init : function() {
@@ -14,11 +15,12 @@ Crafty.c("Player", {
 
 		var jump = false;
 		//var jumpSpeed = 5; //with Gravity
-		var jumpSpeed = 5;
+		var jumpSpeed = 6;
 		//without Gravity
 		var jumpBase = 0;
 		//var jumpHeight = 30;//without Gravity
-		var jumpHeight = 70;
+		var jumpHeight = 150; //Avatar height 148
+		var descending = false;
 		//var hSpeed = 1;
 		//TODO: Remove, deprecated
 
@@ -33,7 +35,7 @@ Crafty.c("Player", {
 		.animate("dummy", 0, 0, 23)
 		.animate("jump", 8, 0, 37)
 		.gravity("Platform")//Component that stops gravity
-		//.gravityConst(1) //Default value is 2
+		.gravityConst(0.20) //Default value is 0.2
 		.attr({
 			x : this.edge_distance,
 			y : 290,
@@ -50,23 +52,30 @@ Crafty.c("Player", {
 			}
 
 			//Jump logic
-			if(jump == true) {
-				this.antigravity()
-				this.y = this.y - jumpSpeed;
+			if(jump === true) {
 
-				if(this.y == jumpBase - jumpHeight) {
-					jumpSpeed = -jumpSpeed;
+
+				if( jumpBase - this.y >= jumpHeight || keyDown === false) {
+					//jumpSpeed = -jumpSpeed; 
+					this.descending = true;
 					//Stop ascension
 					this.gravity();
-				} else if(this.y <= jumpBase && jumpSpeed < 0) {
-					jumpSpeed = -jumpSpeed;
-					//Toggle back to a positive value
+				} else {	//Ascend	
+					this.descending = false;		
+					this.antigravity()
+					this.y = this.y - jumpSpeed;
+				}
+				
+				if(this.y <= jumpBase && this.descending == true) {
+					//jumpSpeed = -jumpSpeed; //Toggle back to a positive value
+					
 					jump = false;
-					this.gravity();
+					
 				}
 
 			} else {
 				jumpBase = this.y;
+				this.gravity();
 			}
 
 			//Player advances
