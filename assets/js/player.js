@@ -7,20 +7,20 @@ Crafty.c("Player", {
 	_minSpeed : 1,
 	_maxSpeed : 15,
 	_speedShift : 1,
+	jumpEnable: false,
+	descending: false,
 	
 	//Score
 	score : 666, //TODO: logic to calc score
 	init : function() {
 		var keyDown = false;
 
-		var jump = false;
 		//var jumpSpeed = 5; //with Gravity
 		var jumpSpeed = 6;
 		//without Gravity
 		var jumpBase = 0;
-		//var jumpHeight = 30;//without Gravity
-		var jumpHeight = 150; //Avatar height 148
-		var descending = false;
+		var jumpHeightMin = 150;
+		var jumpHeightMax = 200; //Avatar height 148
 		//var hSpeed = 1;
 		//TODO: Remove, deprecated
 
@@ -52,28 +52,28 @@ Crafty.c("Player", {
 			}
 
 			//Jump logic
-			if(jump === true) {
-
-
-				if( jumpBase - this.y >= jumpHeight || keyDown === false) {
-					//jumpSpeed = -jumpSpeed; 
-					this.descending = true;
-					//Stop ascension
-					this.gravity();
-				} else {	//Ascend	
-					this.descending = false;		
-					this.antigravity()
-					this.y = this.y - jumpSpeed;
-				}
+			if(this.jumpEnable === true) { //Avoid double jump
+				var jumpHeight = jumpBase - this.y;
 				
-				if(this.y <= jumpBase && this.descending == true) {
-					//jumpSpeed = -jumpSpeed; //Toggle back to a positive value
-					
-					jump = false;
-					
-				}
+				if(this.descending === false){ //Rising
+					if ((jumpHeight <= jumpHeightMin) || (jumpHeight <= jumpHeightMax && keyDown === true)){ //Until min Height no need to check KeyDown
+						//Ascend	
+						this.descending = false;		
+						this.antigravity()
+						this.y = this.y - jumpSpeed;
+							
+					}else{ 
+						this.descending = true;
+						//Stop ascension
+						this.gravity();
+	
+					}
+				}else{ //Descending
 
-			} else {
+				} 
+				
+
+			} else { //Running over a platform
 				jumpBase = this.y;
 				this.gravity();
 			}
@@ -84,13 +84,6 @@ Crafty.c("Player", {
 				this.x = this.edge_distance + this.x_speed - Crafty.viewport.x; //Treadmill mode
 			}
 
-			//Deprecated by Gravity component
-			if(falling == true) {
-				//	this.y += 1;
-			}
-
-			falling = true;
-			//
 
 			//Test death conditions
 			if(this.y >= Crafty.viewport.height) {//Check if the player is out of bounds
@@ -106,12 +99,18 @@ Crafty.c("Player", {
 		}).bind("KeyDown", function(e) {
 			if(e.keyCode === Crafty.keys.SPACE) {
 				keyDown = true;
-				jump = true;
+				if(this.jumpEnable === false){
+					this.jumpEnable = true;
+					this.descending = false;
+				}
 			}
 
 		})
 		//Behaviour when there is solid floor below
 		.onHit("Solid", function(e) {
+
+			
+			
 			//Debugging only: mark collision
 			this.flicker = true;
 			
@@ -132,7 +131,22 @@ Crafty.c("Player", {
 			
 			//TODO: stop player scroll
 			jump = false;
-		}).onHit("Platform", function(e) {
+		})
+		
+
+		//Triggered by Gravity component
+		.bind("hit", function(){
+				
+			//Stop jump process
+			if(this.descending == true){
+				this.descending = false;
+				this.jumpEnable = false;
+			}
+			
+		})
+		
+		.onHit("Platform", function(e) {
+
 			this.delay(function(){
 				this.flicker = false;
 			},1000);
@@ -208,7 +222,7 @@ Crafty.c("Player", {
 			if(this.x_speed < this._maxSpeed) {
 				this.x_speed = this.x_speed + this._speedShift;
 				Crafty.trigger("UpdateSceneSpeed", this.x_speed);
-				console.log("Speed up to" + this.x_speed + "\n");
+				//console.log("Speed up to" + this.x_speed + "\n");
 			}
 			
 			if(this.edge_distance < this.MAX_EDGE_DISTANCE){
