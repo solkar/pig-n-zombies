@@ -105,6 +105,7 @@ Crafty.c("Player", {
 			}
 		}).bind("KeyDown", function(e) {
 			if(e.keyCode === Crafty.keys.SPACE) {
+				Crafty.audio.play("jump", 1, 0.5);
 				keyDown = true;
 				jump = true;
 			}
@@ -141,7 +142,8 @@ Crafty.c("Player", {
 		//Player staggers and reduce the pace when hitting an obstacle
 		.onHit("Obstacle", function(e) {
 			console.log("Stumble upon object!");
-
+			//Crafty.audio.play("obstacle", 1, 0.5);
+			Crafty.audio.play("steps", 1, 0.5);
 			//TODO: load treppling animation
 			//Alternative Apply flicker
 			this.flicker = true;
