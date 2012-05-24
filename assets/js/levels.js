@@ -30,7 +30,7 @@ Crafty.scene("Stage1", function(){
 	
 	//Current tilemap
 	//var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/jump_collision_test_level.json","");
-	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/test_level2.json","");	
+	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/test_level03.json","");	
 	
 	tileMap.bind("EnterFrame", function(){
 			Crafty.viewport.x = Crafty.viewport.x - scrollSpeed;
