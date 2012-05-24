@@ -30,11 +30,11 @@ Crafty.c("Player", {
 		var playerPaused = false;
 
 		//this.addComponent("2D, DOM, player, SpriteAnimation, Keyboard, Collision, Gravity")
-		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker, Twoway")
+		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker, WiredHitBox")
 		.animate("run", 0, 0, 15)
 		.animate("dummy", 0, 0, 23)
 		.animate("jump", 8, 0, 37)
-		.gravity("Platform")//Component that stops gravity
+		.gravity("Below")//Component that stops gravity
 		.gravityConst(0.20) //Default value is 0.2
 		.attr({
 			x : this.edge_distance,
@@ -121,52 +121,31 @@ Crafty.c("Player", {
 		})
 
 		//Triggered by Gravity component
-		.bind("hit", function(){
-				
-			//Stop jump process
-			if(this.descending === true){
-				this.descending = false;
-				this.jumpEnable = false;
-			}else{	
-			//}else if(this.descending === false && this.jumpEnable === true){ //Hit the ceiling
-			    		//TODO: rafactor this as Descending event
-			    		//Stop ascension
-			    		this.descending = true;
-						this.gravity();	
-			}
-			
-		})
-		
-		.onHit("Solid", function(hit){
-			 for (var i = 0; i < hit.length; i++) {
-                if (hit[i].normal.y != 0) { // player hits from the bottom
-                    //this._falling = false;
-                    this._up = false;
-                   // this.trigger("WallCrash");
-                    //this.y = hit[i].obj.y + this.h;
-                }
-                                //TODO: Remove onHit for Solid compoment when this works
-				if (hit[i].normal.x === -1){ //Player hits a wall from the left
+//	.bind("hit", function(){
+//			
+//		//Stop jump process
+//		if(this.descending === true){
+//			this.descending = false;
+//			this.jumpEnable = false;
+//		}else{	
+//		//}else if(this.descending === false && this.jumpEnable === true){ //Hit the ceiling
+//		    		//TODO: rafactor this as Descending event
+//		    		//Stop ascension
+//		    		this.descending = true;
+//					this.gravity();	
+//		}
+//		
+//	})
 
-                	this.x = hit[i].obj.x - this.w;		
-                	this.trigger("WallCrash");
-                	
-                }else if(hit[i].normal.x === 1){
-                	this.trigger("WallCrash");
-                	this.x = hit[i].obj.x + hit[i].obj.w;	
-                }
-			
-			}
-		})
-		.onHit("Platform", function(hit) {
+		.onHit("Solid", function(hit) {
 			//Debug only: apply to make collision evident on testing
-						this.flicker = true;		
+			//this.flicker = true;		
 			//Avoid player from getting inside the tile
             for (var i = 0; i < hit.length; i++) {
-                if (hit[i].normal.y != 0) { // player hits from the bottom
-                    //this._falling = false;
+                if (hit[i].normal.y === -1) { // player hits from the bottom
+                    this._falling = false;
                     this._up = false;
-                    //this.y = hit[i].obj.y + this.h;
+                    this.y = hit[i].obj.y - this.h;
                 }
                 
                 //TODO: Remove onHit for Solid compoment when this works

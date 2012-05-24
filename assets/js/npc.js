@@ -227,3 +227,10 @@ Crafty.c("Chainsaw", {
 
 	}
 });
+
+Crafty.c("Platform", {
+    init: function() {
+        this.addComponent("2D, Collision");    
+        //this.collision();    
+    }   
+});

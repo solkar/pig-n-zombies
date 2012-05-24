@@ -35,7 +35,7 @@
             {
              "0":
                 {
-                 "components":"Platform"
+                 "components":"Platform, Collision"
                 },
              "1":
                 {

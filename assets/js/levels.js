@@ -28,6 +28,8 @@ Crafty.scene("Stage1", function(){
 	//Reset viewport
 	Crafty.viewport.x = 0;
 	
+
+	
 	//Current tilemap
 	//var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/jump_collision_test_level.json","");
 	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/test_level03.json","");	
@@ -45,6 +47,10 @@ Crafty.scene("Stage1", function(){
 		});
 		
 
+	//New component to support gravity
+	Crafty.e("2D, DOM, Color, Below")
+		.attr({x:0, y:580, w:8000, h:16})
+		.color("YELLOW");
 		
 
 	//Next tilemap to appear
