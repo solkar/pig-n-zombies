@@ -19,8 +19,8 @@ Crafty.c("Player", {
 		var jumpSpeed = 6;
 		//without Gravity
 		var jumpBase = 0;
-		var jumpHeightMin = 150;
-		var jumpHeightMax = 200; //Avatar height 148
+		var jumpHeightMin = 3*32;
+		var jumpHeightMax = 5*32; //Avatar height 148
 		//var hSpeed = 1;
 		//TODO: Remove, deprecated
 
@@ -30,7 +30,7 @@ Crafty.c("Player", {
 		var playerPaused = false;
 
 		//this.addComponent("2D, DOM, player, SpriteAnimation, Keyboard, Collision, Gravity")
-		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker")
+		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker, Twoway")
 		.animate("run", 0, 0, 15)
 		.animate("dummy", 0, 0, 23)
 		.animate("jump", 8, 0, 37)
@@ -106,50 +106,81 @@ Crafty.c("Player", {
 			}
 
 		})
-		//Behaviour when there is solid floor below
-		.onHit("Solid", function(e) {
 
-			
-			
-			//Debugging only: mark collision
-			this.flicker = true;
-			
-			//this.trigger("PitFall"); 
-			
-			//TODO: Free fall
-			
+		
+		.bind("WallCrash", function(){
 			//Stop player side-scroll
 			this.x_speed = 0;
 			Crafty.trigger("UpdateSceneSpeed", this.x_speed);
 			
 			//Free fall
 			this.gravity(""); //Disable Platform as support for player
-			this.gravityConst(0.6); //Fall faster
+			//this.gravityConst(0.6); //Fall faster
 			
-		
-			//this.gravity(""); //Platoform doesn't supports player anymore
 			
-			//TODO: stop player scroll
-			jump = false;
 		})
-		
 
 		//Triggered by Gravity component
 		.bind("hit", function(){
 				
 			//Stop jump process
-			if(this.descending == true){
+			if(this.descending === true){
 				this.descending = false;
 				this.jumpEnable = false;
+			}else{	
+			//}else if(this.descending === false && this.jumpEnable === true){ //Hit the ceiling
+			    		//TODO: rafactor this as Descending event
+			    		//Stop ascension
+			    		this.descending = true;
+						this.gravity();	
 			}
 			
 		})
 		
-		.onHit("Platform", function(e) {
+		.onHit("Solid", function(hit){
+			 for (var i = 0; i < hit.length; i++) {
+                if (hit[i].normal.y != 0) { // player hits from the bottom
+                    //this._falling = false;
+                    this._up = false;
+                   // this.trigger("WallCrash");
+                    //this.y = hit[i].obj.y + this.h;
+                }
+                                //TODO: Remove onHit for Solid compoment when this works
+				if (hit[i].normal.x === -1){ //Player hits a wall from the left
 
-			this.delay(function(){
-				this.flicker = false;
-			},1000);
+                	this.x = hit[i].obj.x - this.w;		
+                	this.trigger("WallCrash");
+                	
+                }else if(hit[i].normal.x === 1){
+                	this.trigger("WallCrash");
+                	this.x = hit[i].obj.x + hit[i].obj.w;	
+                }
+			
+			}
+		})
+		.onHit("Platform", function(hit) {
+			//Debug only: apply to make collision evident on testing
+						this.flicker = true;		
+			//Avoid player from getting inside the tile
+            for (var i = 0; i < hit.length; i++) {
+                if (hit[i].normal.y != 0) { // player hits from the bottom
+                    //this._falling = false;
+                    this._up = false;
+                    //this.y = hit[i].obj.y + this.h;
+                }
+                
+                //TODO: Remove onHit for Solid compoment when this works
+				if (hit[i].normal.x === -1){ //Player hits a wall from the left
+
+                	this.x = hit[i].obj.x - this.w;	
+                	
+                	this.trigger("WallCrash");
+                }else if(hit[i].normal.x === 1){
+                	
+                	this.x = hit[i].obj.x + hit[i].obj.w;	
+                }
+            }
+
 		})
 		
 		//Player staggers and reduce the pace when hitting an obstacle
