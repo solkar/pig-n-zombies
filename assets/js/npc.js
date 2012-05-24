@@ -1,9 +1,3 @@
-Crafty.c("Floor", {
-	init: function(){
-		      this.addComponent("2D,DOM,floor");
-	      }
-});
-
 Crafty.c("Background", {
 
 	init: function(){
@@ -93,8 +87,9 @@ Crafty.c("SplashBackground", {
 
 Crafty.c("Obstacle", {
 	init: function(){
-		this.addComponent("DOM, Flicker, Blown, Gravity") //Image is loaded with the tilemap
-		.gravity("Platform")
+		this.addComponent("DOM, Flicker, Blown, Gravity, Collision") //Image is loaded with the tilemap
+		.gravity("Below")
+		.collision()
 		//TODO: select obstacle tile randomly
 
 		//When player touchs it, obstacle is blown away and disappers 
@@ -112,6 +107,22 @@ Crafty.c("Obstacle", {
 			
 		})
 		
+		  .onHit("Platform", function(hit) {
+            for (var i = 0; i < hit.length; i++) {
+                if (hit[i].normal.y !== 0) { // we hit the top or bottom of it
+                    this._up = false;
+                }
+
+                if (hit[i].normal.x === 1) { // we hit the right side of it
+                    this.x = hit[i].obj.x + hit[i].obj.w;
+                }
+
+                if (hit[i].normal.x === -1) { // we hit the left side of it
+                    this.x = hit[i].obj.x - this.w;
+                }
+            }
+        })
+		
 	}
 	
 });
@@ -122,7 +133,7 @@ Crafty.c("RabidBunch", {
 	x_shift: -110,
 	init: function(){
 		this.addComponent("2D, DOM, Image, Gravity")
-			.gravity("Platform")
+			.gravity("Below")
 			.image("assets/img/dummy-bunch.png")
 			.attr( {x: -110,y: 400, h: 120, w: 190})	
 			
@@ -230,7 +241,7 @@ Crafty.c("Chainsaw", {
 
 Crafty.c("Platform", {
     init: function() {
-        this.addComponent("2D, Collision");    
-        //this.collision();    
+        this.addComponent("Collision");    
+        this.collision();    
     }   
 });

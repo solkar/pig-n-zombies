@@ -43,6 +43,7 @@ Crafty.c("Player", {
 			h : 148,
 			z : 1000
 		})
+		.collision()
 		.bind("EnterFrame", function() {
 
 			//Update player speed
@@ -96,7 +97,9 @@ Crafty.c("Player", {
 			if(e.keyCode === Crafty.keys.SPACE) {
 				keyDown = false;
 			}
-		}).bind("KeyDown", function(e) {
+		})
+		
+		.bind("KeyDown", function(e) {
 			if(e.keyCode === Crafty.keys.SPACE) {
 				keyDown = true;
 				if(this.jumpEnable === false){
@@ -121,44 +124,57 @@ Crafty.c("Player", {
 		})
 
 		//Triggered by Gravity component
-//	.bind("hit", function(){
-//			
-//		//Stop jump process
-//		if(this.descending === true){
-//			this.descending = false;
-//			this.jumpEnable = false;
-//		}else{	
-//		//}else if(this.descending === false && this.jumpEnable === true){ //Hit the ceiling
-//		    		//TODO: rafactor this as Descending event
-//		    		//Stop ascension
-//		    		this.descending = true;
-//					this.gravity();	
-//		}
-//		
-//	})
-
-		.onHit("Solid", function(hit) {
+	//	.bind("hit", function(){
+	//			
+	//		//Stop jump process
+	//		if(this.descending === true){
+	//			this.descending = false;
+	//			this.jumpEnable = false;
+	//		}else{	
+	//		//}else if(this.descending === false && this.jumpEnable === true){ //Hit the ceiling
+	//		    		//TODO: rafactor this as Descending event
+	//		    		//Stop ascension
+	//		    		this.descending = true;
+	//					this.gravity();	
+	//		}
+	//		
+	//	})
+	
+		.onHit("Platform", function(hit) {
+			//Stop jump process
+			if(this.descending === true){
+				this.descending = false;
+				this.jumpEnable = false;
+			}else if(this.descending === false){	
+			//}else if(this.descending === false && this.jumpEnable === true){ //Hit the ceiling
+			    		//TODO: rafactor this as Descending event
+			    		//Stop ascension
+			    		this.descending = true;
+						this.gravity();	
+			}
 			//Debug only: apply to make collision evident on testing
 			//this.flicker = true;		
 			//Avoid player from getting inside the tile
-            for (var i = 0; i < hit.length; i++) {
-                if (hit[i].normal.y === -1) { // player hits from the bottom
-                    this._falling = false;
+          for (var i = 0; i < hit.length; i++) {
+                if (hit[i].normal.y === 1) { // we hit the top or bottom of it
                     this._up = false;
+                    this._falling = false;
                     this.y = hit[i].obj.y - this.h;
                 }
-                
-                //TODO: Remove onHit for Solid compoment when this works
-				if (hit[i].normal.x === -1){ //Player hits a wall from the left
 
-                	this.x = hit[i].obj.x - this.w;	
-                	
-                	this.trigger("WallCrash");
-                }else if(hit[i].normal.x === 1){
-                	
-                	this.x = hit[i].obj.x + hit[i].obj.w;	
+                if (hit[i].normal.x === 1) { // we hit the right side of it
+                    this.x = hit[i].obj.x + hit[i].obj.w;
+                }
+
+                if (hit[i].normal.x === -1) { // we hit the left side of it
+                    this.x = hit[i].obj.x - this.w;
                 }
             }
+
+
+
+
+
 
 		})
 		

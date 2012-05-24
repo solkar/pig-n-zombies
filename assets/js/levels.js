@@ -69,8 +69,8 @@ Crafty.scene("Stage1", function(){
 	//Crafty.e("Background");
 	//Crafty.e("Midground");
 	
-	Crafty.e("Chainsaw");
-	Crafty.e("RabidBunch");	
+	//Crafty.e("Chainsaw");
+	//Crafty.e("RabidBunch");	
 
 	//I am not sure it this is the best place for this logic
 	Crafty.bind("UpdateSceneSpeed",function(speed){
