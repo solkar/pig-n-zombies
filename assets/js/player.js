@@ -7,8 +7,6 @@ Crafty.c("Player", {
 	_minSpeed : 1,
 	_maxSpeed : 15,
 	_speedShift : 1,
-	jumpEnable: false,
-	descending: false,
 	
 	//Score
 	score : 666, //TODO: logic to calc score
