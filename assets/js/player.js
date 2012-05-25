@@ -16,7 +16,7 @@ Crafty.c("Player", {
 		var keyDown = false;
 
 		//var jumpSpeed = 5; //with Gravity
-		var jumpSpeed = 6;
+		var jumpSpeed = 7;
 		//without Gravity
 		var jumpBase = 0;
 		var jumpHeightMin = 3*32;
@@ -115,22 +115,30 @@ Crafty.c("Player", {
                     this._up = false;
                     this._falling = true;
                     this.y = hit[i].obj.h + this.h;
-                }
-                
-                if (hit[i].normal.y === -1) { // we hit the top of it
+                    break; //Escape fo loop ignoring other collisions
+                    
+                }else if (hit[i].normal.y === -1) { // we hit the top of it
                     this._up = false;
                     this._falling = false;
                     this.y = hit[i].obj.y - this.h;
-                }
+                    break;
+                }else{
+                	
+                	console.log("Normal.x:"+hit[i].normal.x);
+                	console.log("Normal.y:"+hit[i].normal.y);
+                	console.log("overlap:"+hit[i].overlap);
 
-                if (hit[i].normal.x === 1) { // we hit the right side of it
-                    this.x = hit[i].obj.x + hit[i].obj.w;
-                }
-
-                if (hit[i].normal.x === -1) { // we hit the left side of it
-                    this.x = hit[i].obj.x - this.w;
-                    
-                    this.trigger("WallCrash");
+	                if (hit[i].normal.x === 1) { // we hit the right side of it
+	                    this.x = hit[i].obj.x + hit[i].obj.w;
+	                }
+	
+	                if ( hit[i].normal.x === -1) { // we hit the left side of it
+	                	
+		                    this.x = hit[i].obj.x - this.w;         
+		                    this.trigger("WallCrash");
+	
+	                    
+	                }
                 }
             }
 

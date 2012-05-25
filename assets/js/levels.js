@@ -49,7 +49,7 @@ Crafty.scene("Stage1", function(){
 
 	//New component to support gravity
 	Crafty.e("2D, DOM, Color, Below")
-		.attr({x:0, y:580, w:80, h:16})
+		.attr({x:0, y:580, w:5, h:16})
 		.color("YELLOW");
 		
 
