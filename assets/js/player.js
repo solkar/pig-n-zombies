@@ -102,8 +102,8 @@ Crafty.c("Player", {
 			//set score
 			this.delay(function() {
 		
-				Crafty.trigger("GameOver", this.score);
-				this.trigger("ResetPlayer");
+				//Crafty.trigger("GameOver", this.score);
+				//this.trigger("ResetPlayer");
 		
 				this.flicker = false;
 				}, 1500);

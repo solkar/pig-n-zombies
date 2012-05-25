@@ -130,11 +130,10 @@ Crafty.c("RabidBunch", {
 	x_shift: -110,
 	init: function(){
 		this.addComponent("2D, DOM, Image, Gravity, Collision")
-			.collision()
 			.gravity("Platform")
 			.image("assets/img/dummy-bunch.png")
 			.attr( {x: -110,y: 300, h: 120, w: 190})	
-			
+			.collision()
 			.bind("EnterFrame",function(frame){
 				//this.x = 0 - Crafty.viewport.x;
 				this.x = this.x_shift - Crafty.viewport.x;
@@ -154,10 +153,6 @@ Crafty.c("RabidBunch", {
 				}
 				
 			})	
-			
-		.onHit("Player", function(hit){
-			Crafty.trigger("GameOver",333);
-		})
 			
 		.onHit("Platform", function(hit) {                                                                                                                                                                 	          	
 			//Avoid Bunch from falling dawn
@@ -210,14 +205,13 @@ Crafty.c("Chainsaw", {
 	descendHeight: 150,//0,
 	
 	init: function(){
-		this.addComponent("2D, DOM, Image, Flicker, Rumble")
-		//this.addComponent("2D, DOM, Image, Flicker, Rumble, Collision")
-			//.collision()
+		this.addComponent("2D, DOM, Image, Flicker, Rumble, Collision")
 			.image("assets/img/dummy-chainsaw.png")
 			.attr( {x: this.ceilingPosition,
 				y: -this.assetHeight, 
 				h: this.assetHeight, 
 				w: this.assetWidth})	
+			.collision()
 			
 			.bind("EnterFrame",function(){
 				if(this.descending === true){
