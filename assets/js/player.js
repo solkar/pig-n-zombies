@@ -95,18 +95,16 @@ Crafty.c("Player", {
 		})
 		
 		.onHit("RabidBunch", function(){
-			this.flicker = true;
 			//Animation alternative
 			var banner = this.addComponent("Image").image("assets/img/chopped_banner.png");
 			
 			//set score
 			this.delay(function() {
 		
-				//Crafty.trigger("GameOver", this.score);
-				//this.trigger("ResetPlayer");
-		
-				this.flicker = false;
-				}, 1500);
+				Crafty.trigger("GameOver", this.score);
+				this.trigger("ResetPlayer");
+
+				}, 500);
 		})
 		
 		.onHit("Platform", function(hit) {                                                                                                                                                                            	          	
