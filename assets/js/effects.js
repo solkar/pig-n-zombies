@@ -24,27 +24,28 @@ Crafty.c("Blown", {
 	blownSpeed: 2,
 	init:	function(){
 		//this.blown = true;
-		this.addComponent("Gravity, Collision")
-			.gravity("Platform") //Component that stops gravity
-			//TODO: set gravityConst randomly
-			//.gravityConst(.15)
-			.gravityConst(Crafty.math.randomNumber(0.05,0.13));
+		this.addComponent("Collision")
+		//	.gravity("Below") //Component that stops gravity
+		//	//TODO: set gravityConst randomly
+		//	//.gravityConst(.15)
+		//	.gravityConst(Crafty.math.randomNumber(0.05,0.13))
+		//	.antigravity();
 		
 		this.bind("EnterFrame", function(frame){
 			
 			if(this.blown){
-				console.log("Obstacle blown up!\n");
+				//console.log("Obstacle blown up!\n");
 				
 				//Rising
 				this.move("ne", 2*this.blownSpeed);
 				this.move("e", 3*this.blownSpeed);
 				this.rotation = this.rotation + 5;
 				
-				//Descending
-				if(frame % 20 == 0){
-					console.log("Gravity ready to blow\n");
-					this.gravity();
-				}
+				//Remove obstacle form the screen
+				this.delay(function() {
+	       		  this.destroy();
+				}, 1500);
+				
 			}
 		});
 	}

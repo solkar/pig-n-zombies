@@ -49,7 +49,7 @@ Crafty.scene("Stage1", function(){
 
 	//New component to support gravity
 	Crafty.e("2D, DOM, Color, Below")
-		.attr({x:0, y:580, w:8000, h:16})
+		.attr({x:0, y:580, w:80, h:16})
 		.color("YELLOW");
 		
 
@@ -59,18 +59,18 @@ Crafty.scene("Stage1", function(){
 	
 	
 	//Set player into the scene
-	var player = Crafty.e("Player")
-		.animate("dummy",120,-1);
+	var player = Crafty.e("Player");
+		//.animate("dummy",120,-1);
 		
 
 
 	//Load Parallax background elements
-	//Crafty.background("black");
-	//Crafty.e("Background");
-	//Crafty.e("Midground");
+	Crafty.background("black");
+	Crafty.e("Background");
+	Crafty.e("Midground");
 	
-	//Crafty.e("Chainsaw");
-	//Crafty.e("RabidBunch");	
+	Crafty.e("Chainsaw");
+	Crafty.e("RabidBunch");	
 
 	//I am not sure it this is the best place for this logic
 	Crafty.bind("UpdateSceneSpeed",function(speed){

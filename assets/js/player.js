@@ -2,7 +2,7 @@ Crafty.c("Player", {
 	//Player scroll speed controls
 	x_speed : 1,
 	MAX_EDGE_DISTANCE: 280,
-	edge_distance: 185, //180 collision with RabidBunch
+	edge_distance: 120, //<180 collision with RabidBunch
 	obstacle_penalization: 30,
 	_minSpeed : 1,
 	_maxSpeed : 15,
@@ -29,16 +29,16 @@ Crafty.c("Player", {
 		//pixels
 		var playerPaused = false;
 
-		//this.addComponent("2D, DOM, player, SpriteAnimation, Keyboard, Collision, Gravity")
-		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker, WiredHitBox")
-		//.animate("run", 0, 0, 15)
+		
+		//this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker, WiredHitBox")
+		this.addComponent("2D, DOM, cerdo, Keyboard, Collision, Gravity, Flicker, Twoway")
+		.twoway(0,jumpSpeed)
 		//.animate("dummy", 0, 0, 23)
-		//.animate("jump", 8, 0, 37)
 		.gravity("Below")//Component that stops gravity
 		.gravityConst(0.20) //Default value is 0.2
 		.attr({
 			x : this.edge_distance,
-			y : 290,
+			y : 190,
 			w : 128,
 			h : 148,
 			z : 1000
@@ -52,32 +52,6 @@ Crafty.c("Player", {
 				this.trigger("IncreasePace");
 			}
 
-			//Jump logic
-			if(this.jumpEnable === true) { //Avoid double jump
-				var jumpHeight = jumpBase - this.y;
-				
-				if(this.descending === false){ //Rising
-					if ((jumpHeight <= jumpHeightMin) || (jumpHeight <= jumpHeightMax && keyDown === true)){ //Until min Height no need to check KeyDown
-						//Ascend	
-						this.descending = false;		
-						this.antigravity()
-						this.y = this.y - jumpSpeed;
-							
-					}else{ 
-						this.descending = true;
-						//Stop ascension
-						this.gravity();
-	
-					}
-				}else{ //Descending
-
-				} 
-				
-
-			} else { //Running over a platform
-				jumpBase = this.y;
-				this.gravity();
-			}
 
 			//Player advances
 			if(playerPaused != true) {
@@ -93,19 +67,17 @@ Crafty.c("Player", {
 				this.trigger("HumanEaten");
 			}
 
-		}).bind("KeyUp", function(e) {
+		})
+		
+		.bind("KeyUp", function(e) {
 			if(e.keyCode === Crafty.keys.SPACE) {
 				keyDown = false;
 			}
 		})
 		
 		.bind("KeyDown", function(e) {
-			if(e.keyCode === Crafty.keys.SPACE) {
-				keyDown = true;
-				if(this.jumpEnable === false){
-					this.jumpEnable = true;
-					this.descending = false;
-				}
+			if(e.keyCode === Crafty.keys.SPACE ) {
+				this._up = true;
 			}
 
 		})
@@ -118,50 +90,32 @@ Crafty.c("Player", {
 			
 			//Free fall
 			this.gravity(""); //Disable Platform as support for player
-			//this.gravityConst(0.6); //Fall faster
-			
+
 			
 		})
-
-		//Triggered by Gravity component
-	//	.bind("hit", function(){
-	//			
-	//		//Stop jump process
-	//		if(this.descending === true){
-	//			this.descending = false;
-	//			this.jumpEnable = false;
-	//		}else{	
-	//		//}else if(this.descending === false && this.jumpEnable === true){ //Hit the ceiling
-	//		    		//TODO: rafactor this as Descending event
-	//		    		//Stop ascension
-	//		    		this.descending = true;
-	//					this.gravity();	
-	//		}
-	//		
-	//	})
-	
-		.onHit("Platform", function(hit) {
+		
+		.onHit("RabidBunch", function(){
+			this.flicker = true;
+			//Animation alternative
+			var banner = this.addComponent("Image").image("assets/img/chopped_banner.png");
 			
-			this.flicker = true; //Mark the collision
-			
-			//Stop jump process 
-			if(this.descending === true){
-				this.descending = false;
-				this.jumpEnable = false;
-			}else if(this.descending === false){	
-			//}else if(this.descending === false && this.jumpEnable === true){ //Hit the ceiling
-			    		//TODO: rafactor this as Descending event
-			    		//Stop ascension
-			    		this.descending = true;
-						this.gravity();	
-			}
-			
-	
+			//set score
+			this.delay(function() {
+		
+				Crafty.trigger("GameOver", this.score);
+				this.trigger("ResetPlayer");
+		
+				this.flicker = false;
+				}, 1500);
+		})
+		
+		.onHit("Platform", function(hit) {                                                                                                                                                                            	          	
 			//Avoid player from getting inside the tile
           for (var i = 0; i < hit.length; i++) {
+
                 if (hit[i].normal.y === 1) { // we hit the bottom of it
                     this._up = false;
-                    this._falling = false;
+                    this._falling = true;
                     this.y = hit[i].obj.h + this.h;
                 }
                 
@@ -177,6 +131,8 @@ Crafty.c("Player", {
 
                 if (hit[i].normal.x === -1) { // we hit the left side of it
                     this.x = hit[i].obj.x - this.w;
+                    
+                    this.trigger("WallCrash");
                 }
             }
 
@@ -215,22 +171,10 @@ Crafty.c("Player", {
 				Crafty.trigger("GameOver", this.score);
 				this.trigger("ResetPlayer");
 
-			}, 1500);
+			}, 500);
 		})
 		
-		.onHit("RabidBunch", function(){
-			
-			//Animation alternative
-			var banner = this.addComponent("Image").image("assets/img/chopped_banner.png");
-			
-			//set score
-			this.delay(function() {
-		
-				Crafty.trigger("GameOver", this.score);
-				//this.trigger("ResetPlayer");
-		
-				}, 1500);
-		})
+
 		
 		.bind("ReducePace", function() {
 			//TODO: load stagger animation
@@ -285,13 +229,13 @@ Crafty.c("Player", {
 		
 		.bind("ResetPlayer", function() {
 			this.attr({
-				x : 90,
-				y : 90,
+				x : this.edge_distance,
+				y : 190,
 				w : 128,
 				h : 148,
 				z : 1000
 			});
-			this.animate("dummy",120,-1);
+			//this.animate("dummy",120,-1);
 
 		});
 	}
