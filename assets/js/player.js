@@ -31,9 +31,9 @@ Crafty.c("Player", {
 
 		//this.addComponent("2D, DOM, player, SpriteAnimation, Keyboard, Collision, Gravity")
 		this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker, WiredHitBox")
-		.animate("run", 0, 0, 15)
-		.animate("dummy", 0, 0, 23)
-		.animate("jump", 8, 0, 37)
+		//.animate("run", 0, 0, 15)
+		//.animate("dummy", 0, 0, 23)
+		//.animate("jump", 8, 0, 37)
 		.gravity("Below")//Component that stops gravity
 		.gravityConst(0.20) //Default value is 0.2
 		.attr({
@@ -141,7 +141,10 @@ Crafty.c("Player", {
 	//	})
 	
 		.onHit("Platform", function(hit) {
-			//Stop jump process
+			
+			this.flicker = true; //Mark the collision
+			
+			//Stop jump process 
 			if(this.descending === true){
 				this.descending = false;
 				this.jumpEnable = false;
@@ -152,11 +155,17 @@ Crafty.c("Player", {
 			    		this.descending = true;
 						this.gravity();	
 			}
-			//Debug only: apply to make collision evident on testing
-			//this.flicker = true;		
+			
+	
 			//Avoid player from getting inside the tile
           for (var i = 0; i < hit.length; i++) {
-                if (hit[i].normal.y === 1) { // we hit the top or bottom of it
+                if (hit[i].normal.y === 1) { // we hit the bottom of it
+                    this._up = false;
+                    this._falling = false;
+                    this.y = hit[i].obj.h + this.h;
+                }
+                
+                if (hit[i].normal.y === -1) { // we hit the top of it
                     this._up = false;
                     this._falling = false;
                     this.y = hit[i].obj.y - this.h;
@@ -170,11 +179,6 @@ Crafty.c("Player", {
                     this.x = hit[i].obj.x - this.w;
                 }
             }
-
-
-
-
-
 
 		})
 		

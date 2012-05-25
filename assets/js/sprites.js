@@ -2,7 +2,7 @@ Crafty.sprite(30,"assets/player.png",{
 	player:[0,0]
 });
 
-Crafty.sprite(128,"assets/img/cerdos.png",{
+Crafty.sprite(128,"assets/img/player.png",{
 	cerdo: [0,0]
 });
 
