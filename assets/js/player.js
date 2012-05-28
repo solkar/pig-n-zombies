@@ -7,7 +7,7 @@ Crafty.c("Player", {
 	_minSpeed : 3,
 	_maxSpeed : 15,
 	_speedShift : 1,
-	jumpSpeed: 1,
+	jumpSpeed: 6,
 	
 	//Score
 	score : 666, //TODO: logic to calc score
@@ -32,7 +32,7 @@ Crafty.c("Player", {
 		.twoway(0,this.jumpSpeed)
 		//.animate("dummy", 0, 0, 23)
 		.gravity("Below")//Component that stops gravity
-		.gravityConst(0.20) //Default value is 0.2
+		.gravityConst(0.90) //Default value is 0.2
 		.attr({
 			x : this.edge_distance,
 			y : 190,
