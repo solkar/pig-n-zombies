@@ -1,28 +1,27 @@
 Crafty.c("Player", {
 	//Player scroll speed controls
-	x_speed : 1,
+	x_speed : 3,
 	MAX_EDGE_DISTANCE: 280,
 	edge_distance: 120, //<180 collision with RabidBunch
 	obstacle_penalization: 30,
-	_minSpeed : 1,
+	_minSpeed : 3,
 	_maxSpeed : 15,
 	_speedShift : 1,
+	jumpSpeed: 1,
 	
 	//Score
 	score : 666, //TODO: logic to calc score
 	init : function() {
 		var keyDown = false;
 
-		//var jumpSpeed = 5; //with Gravity
-		var jumpSpeed = 7;
 		//without Gravity
-		var jumpBase = 0;
+		var jumpBase = 0; //Deprecated
 		var jumpHeightMin = 3*32;
 		var jumpHeightMax = 5*32; //Avatar height 148
 		//var hSpeed = 1;
 		//TODO: Remove, deprecated
 
-		var falling = true;
+		var falling = true; //Deprecated
 		var hungryCrowdWidth = 5;
 		//pixels
 		var playerPaused = false;
@@ -30,7 +29,7 @@ Crafty.c("Player", {
 		
 		//this.addComponent("2D, DOM, cerdo, SpriteAnimation, Keyboard, Collision, Gravity, Flicker, WiredHitBox")
 		this.addComponent("2D, DOM, cerdo, Keyboard, Collision, Gravity, Flicker, Twoway")
-		.twoway(0,jumpSpeed)
+		.twoway(0,this.jumpSpeed)
 		//.animate("dummy", 0, 0, 23)
 		.gravity("Below")//Component that stops gravity
 		.gravityConst(0.20) //Default value is 0.2
@@ -77,8 +76,30 @@ Crafty.c("Player", {
 			if(e.keyCode === Crafty.keys.SPACE ) {
 				this._up = true;
 			}
+			
+			//Change gravity dynamically
+			//TODO: disable, only for testing
+			if(e.keyCode === Crafty.keys.M ){
+					this._gravityConst = this._gravityConst + 0.05; //Bad practice, messing with internal vars
+				 	console.log("Gravity:" + this._gravityConst);
+			}else if(e.keyCode === Crafty.keys.N ){
+					this._gravityConst = this._gravityConst - 0.05; //Bad practice, messing with internal vars
+				 	console.log("Gravity:" + this._gravityConst);
+			}
+			
+			if(e.keyCode === Crafty.keys.J ){
+					this.jumpSpeed = this.jumpSpeed + 1; 
+				 	this.twoway(0,this.jumpSpeed)
+				 	console.log("JumpSpeed:" + this.jumpSpeed);
+			}else if(e.keyCode === Crafty.keys.H ){
+					this.jumpSpeed = this.jumpSpeed - 1; 
+				 	this.twoway(0,this.jumpSpeed)
+				 	console.log("JumpSpeed:" + this.jumpSpeed);
+			}
 
 		})
+		
+		
 
 		
 		.bind("WallCrash", function(){
