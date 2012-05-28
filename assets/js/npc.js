@@ -197,7 +197,7 @@ Crafty.c("RabidBunch", {
 
 Crafty.c("Chainsaw", {
 	//TODO: Randomize intial x value
-	ceilingPosition: 600,
+	ceilingPosition: 27200,
 	descending: true,
 	assetHeight: 180,
 	assetWidth: 200,

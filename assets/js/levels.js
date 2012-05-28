@@ -20,7 +20,7 @@ Crafty.scene("SplashScreen",function(){
 
 
 Crafty.scene("Stage1", function(){
-	var tileMapwidth = 32*500; //tile pixel width * number of tiles
+	var tileMapwidth = 32*1000; //tile pixel width * number of tiles
 	var scrollSpeed = 4;//TODO: sync initial speed with Player
 	
 	Crafty.pause(false); //TODO:remove
@@ -32,7 +32,7 @@ Crafty.scene("Stage1", function(){
 	
 	//Current tilemap
 	//var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/jump_collision_test_level.json","");
-	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/test_level03.json","");	
+	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/test_level04.json","");	
 	
 	tileMap.bind("EnterFrame", function(){
 			Crafty.viewport.x = Crafty.viewport.x - scrollSpeed;

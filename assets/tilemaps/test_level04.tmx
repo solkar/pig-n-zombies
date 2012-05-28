@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="1000" height="18" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Desktop1" tilewidth="32" tileheight="32">
+  <image source="../../../../../Desktop/Desktop1.png" trans="ff00ff" width="128" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="components" value="Platform"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="components" value="Obstacle"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="1000" height="18">
+  <data encoding="base64" compression="zlib">
+   eJzt2lGSgyAQBcCY+x86F9hE2BB4A91V/OoDqZGxfDwA2M21OsAHydkAAABgpOQeODkbAAAAjJTcAydnAwAAgJGu8AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQ3XN1AAAAAEq5wsco/+mXv+mxv+3PnwOuQQ2eM8B5Us5HAKdL67uSa/xdttXfDqoO/rb6uRjr93yVnAAAaU48u/3ijJd8JrzLlpw9lTV7z9rsqbfGr9Jy79Xvll3fp5Wy7jparM746/kBVDeq3vVcp0KN7c2YPKe7bMnZU1mz96zNnqrUePsPYK6k/1nZ1+rvg7O/o45Q5ezWSn/OJ9XWbOa7s9ra0KZKjbf/gF6rz+vGWaPViRnv7lVd6xxGzbX3WabrzZg8pxP2+2yza9eoe824jv20pyo13v4Der0AHTkDxQ==
+  </data>
+ </layer>
+</map>
