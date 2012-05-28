@@ -7,7 +7,7 @@ Crafty.c("Player", {
 	_minSpeed : 3,
 	_maxSpeed : 15,
 	_speedShift : 1,
-	jumpSpeed: 6,
+	jumpSpeed: 16,
 	
 	//Score
 	score : 666, //TODO: logic to calc score
@@ -87,15 +87,16 @@ Crafty.c("Player", {
 				 	console.log("Gravity:" + this._gravityConst);
 			}
 			
-			if(e.keyCode === Crafty.keys.J ){
-					this.jumpSpeed = this.jumpSpeed + 1; 
+			/* if(e.keyCode === Crafty.keys.J ){
+					Crafty("Twoway").jump = this.jump + 1; 
 				 	this.twoway(0,this.jumpSpeed)
-				 	console.log("JumpSpeed:" + this.jumpSpeed);
+				 	console.log("JumpSpeed:" + this.jump);
 			}else if(e.keyCode === Crafty.keys.H ){
-					this.jumpSpeed = this.jumpSpeed - 1; 
+					Crafty("Twoway").jump = this.jump - 1; 
 				 	this.twoway(0,this.jumpSpeed)
-				 	console.log("JumpSpeed:" + this.jumpSpeed);
+				 	console.log("JumpSpeed:" + this.jump);
 			}
+			*/
 
 		})
 		
