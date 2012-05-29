@@ -169,7 +169,7 @@ Crafty.c("Player", {
 		
 		//Player staggers and reduce the pace when hitting an obstacle
 		.onHit("Obstacle", function(e) {
-			console.log("Stumble upon object!");
+			//console.log("Stumble upon object!");
 
 			//TODO: load treppling animation
 			//Alternative Apply flicker

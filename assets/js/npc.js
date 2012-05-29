@@ -100,6 +100,11 @@ Crafty.c("Obstacle", {
 			this.blown = true;
 			this.flicker = true;
 			
+			this.delay(function(){
+				this.removeComponent("Obstacle"); //Avoid multiple collissions with Player
+			},300);
+			
+			
 			
 		})
 		
@@ -202,7 +207,7 @@ Crafty.c("Chainsaw", {
 	assetHeight: 180,
 	assetWidth: 200,
 	descendSpeed: 3,
-	descendHeight: 150,//0,
+	descendHeight: 100,//0,
 	
 	init: function(){
 		this.addComponent("2D, DOM, Image, Flicker, Rumble, Collision")
