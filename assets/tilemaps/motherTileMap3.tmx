@@ -4,7 +4,7 @@
   <image source="../../../../../Desktop/Desktop1.png" trans="ff00ff" width="128" height="128"/>
   <tile id="0">
    <properties>
-    <property name="components" value="Platform, Solid"/>
+    <property name="components" value="Platform"/>
    </properties>
   </tile>
   <tile id="1">
