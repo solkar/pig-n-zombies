@@ -98,5 +98,35 @@ Crafty.scene("Stage1", function(){
 
 		//Crafty.scene("SplashScreen");
 	});
+	
+	 /**@
+	* #UpdateScore
+	* Print player score on the screen, given by the frame number
+	* Score is passed as string
+	* @trigger 
+	*/
+	
+
+
+	Crafty.bind("UpdateScore", function(score){
+		//Wipe out HUD
+		Crafty("HUD").destroy();
+		
+		//Print meters sign
+		Crafty.e("2D, DOM, HUD, meters")
+			.attr({x:736-Crafty.viewport.x
+				, y:60})
+		
+		
+		for (var i = 0; i < score.length; i++){
+			Crafty.e("2D, DOM, HUD")
+			 .attr({x:720-16*i-Crafty.viewport.x
+				, y:60})
+			.addComponent("num"+score[score.length - 1 - i]); //Don't like the -1
+		}
+		
+		//TODO: Stop counting when game is paused
+		
+	});
 
 });

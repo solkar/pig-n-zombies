@@ -63,7 +63,10 @@ Crafty.c("Player", {
 			} else if(this.x <= 0 + hungryCrowdWidth) {//Zero or Crafty.viewport.width???
 				this.trigger("HumanEaten");
 			}
-
+			
+			//Calc and update score
+			var score = this.x / 32; //Roughly number of tiles
+			Crafty.trigger("UpdateScore", score.toFixed(0));
 		})
 		
 		.bind("KeyUp", function(e) {
