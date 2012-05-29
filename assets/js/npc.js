@@ -208,7 +208,7 @@ Crafty.c("Chainsaw", {
 	assetHeight: 240,
 	assetWidth: 70,
 	descendSpeed: 3,
-	descendHeight: 100,//0,
+	descendHeight: 70,//0,
 	
 	init: function(){
 		this.addComponent("2D, DOM, Image, Flicker, Rumble, Collision")
