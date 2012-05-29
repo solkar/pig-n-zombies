@@ -203,9 +203,10 @@ Crafty.c("RabidBunch", {
 Crafty.c("Chainsaw", {
 	//TODO: Randomize intial x value
 	ceilingPosition: 27200,
+	//ceilingPosition: 600, //Debug position
 	descending: true,
-	assetHeight: 180,
-	assetWidth: 200,
+	assetHeight: 240,
+	assetWidth: 70,
 	descendSpeed: 3,
 	descendHeight: 100,//0,
 	
@@ -215,7 +216,8 @@ Crafty.c("Chainsaw", {
 			.attr( {x: this.ceilingPosition,
 				y: -this.assetHeight, 
 				h: this.assetHeight, 
-				w: this.assetWidth})	
+				w: this.assetWidth,
+				rotation: 45})	
 			.collision()
 			
 			.bind("EnterFrame",function(){
