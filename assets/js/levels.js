@@ -1,7 +1,7 @@
 Crafty.scene("Loading",function(){
 	var toLoad = [];
 
-	toLoad.push("assets/img/cerdo.png","img/background.png","assets/img/play1_atlas0.png","assets/stage1.json");
+	toLoad.push("assets/tilemaps/test_level04.json","assets/img/cerdo.png","background.png","midground.png");
 	for(var i in Crafty.assets){
 		toLoad.push(i);
 	}
@@ -46,17 +46,12 @@ Crafty.scene("Stage1", function(){
 
 	//Current tilemap
 	//var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/jump_collision_test_level.json","");
-	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/test_level04.json","");	
+	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/test_level04.json","", "DOM");	
 	
 	tileMap.bind("EnterFrame", function(){
 			Crafty.viewport.x = Crafty.viewport.x - scrollSpeed;
-			//console.log("x:"+Crafty.viewport.x + "\n"); 
 			if(Crafty.viewport.x < -tileMapwidth){
-					//viewport.x = 0;
-					//Crafty.removeComponent("Player",true);
-					
 					Crafty.viewport.x = Crafty.viewport.x + tileMapwidth;
-					//Crafty("Player").x = 00;
 			}
 		});
 		
@@ -74,6 +69,7 @@ Crafty.scene("Stage1", function(){
 	
 	//Set player into the scene
 	var player = Crafty.e("Player");
+	
 		//.animate("dummy",120,-1);
 		
 
