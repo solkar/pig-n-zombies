@@ -5,16 +5,30 @@ Crafty.scene("Loading",function(){
 	for(var i in Crafty.assets){
 		toLoad.push(i);
 	}
-	//Crafty.scene("Level1");
-	Crafty.scene("SplashScreen");
-	//Crafty.scene("Benchmarking");//Test purpose only
+
+	//Crafty.scene("SplashScreen");
+		Crafty.scene("WelcomeScreen");
+	
 });
 
 
-Crafty.scene("SplashScreen",function(){
+Crafty.scene("WelcomeScreen",function(){
 
-	Crafty.e("SplashBackground");
+	Crafty.e("WelcomePrompt");
+	Crafty.e("2D, DOM, Text").attr({ x: 10, y: 100 }).text("Press space to start!!");
+	
+	
 	//Crafty.scene("Stage1");
+	this.bind("KeyDown", function(e){ 
+      if (e.keyCode === Crafty.keys.SPACE){
+	     
+	     Crafty.scene("Stage1");
+	     // Crafty.trigger("Reset");
+	     $('#cr-stage').removeClass('transparent');
+
+      } 
+  
+  });
 });
 
 
