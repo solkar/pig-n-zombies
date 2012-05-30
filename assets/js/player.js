@@ -64,9 +64,14 @@ Crafty.c("Player", {
 				this.trigger("HumanEaten");
 			}
 			
+			this.trigger("SetScore");
+			
+		})
+		
+		.bind("SetScore", function(){
 			//Calc and update score
 			var score = this.x / 32; //Roughly number of tiles
-			Crafty.trigger("UpdateScore", score.toFixed(0));
+			Crafty.trigger("UpdateScore", score.toFixed(0)); //Calls Scene event that control score display
 		})
 		
 		.bind("KeyUp", function(e) {
@@ -90,16 +95,6 @@ Crafty.c("Player", {
 				 	console.log("Gravity:" + this._gravityConst);
 			}
 			
-			/* if(e.keyCode === Crafty.keys.J ){
-					Crafty("Twoway").jump = this.jump + 1; 
-				 	this.twoway(0,this.jumpSpeed)
-				 	console.log("JumpSpeed:" + this.jump);
-			}else if(e.keyCode === Crafty.keys.H ){
-					Crafty("Twoway").jump = this.jump - 1; 
-				 	this.twoway(0,this.jumpSpeed)
-				 	console.log("JumpSpeed:" + this.jump);
-			}
-			*/
 
 		})
 		
@@ -121,13 +116,9 @@ Crafty.c("Player", {
 			//Animation alternative
 			var banner = this.addComponent("Image").image("assets/img/chopped_banner.png");
 			
-			//set score
 			this.delay(function() {
-		
-				Crafty.trigger("GameOver", this.score);
-				this.trigger("ResetPlayer");
-
-				}, 500);
+				this.trigger("PlayerDies");
+				}, 300);
 		})
 		
 		.onHit("Platform", function(hit) {                                                                                                                                                                            	          	
@@ -194,11 +185,9 @@ Crafty.c("Player", {
 			//Animation alternative
 			var banner = this.addComponent("Image").image("assets/img/chopped_banner.png");
 
-			//set punctuation
 			this.delay(function() {
 
-				Crafty.trigger("GameOver", this.score);
-				this.trigger("ResetPlayer");
+				this.trigger("PlayerDies");
 
 			}, 500);
 		})
@@ -232,22 +221,8 @@ Crafty.c("Player", {
 				this.edge_distance = this.edge_distance + this.obstacle_penalization/2;
 			}
 		})
-		//Death behaviours
-		.bind("PitFall", function() {
 
-			//TODO: Pause game
 
-			//TODO: Show punctuation
-
-			//TODO: Show death message
-			//End game
-			Crafty.trigger("GameOver", this.score);
-			//set punctuation
-			this.trigger("ResetPlayer");
-
-		})
-		.bind("HumanEaten", function() {
-		})
 		.bind("PausePlayer", function() {
 			playerPaused = true;
 		})
@@ -256,7 +231,21 @@ Crafty.c("Player", {
 			playerPaused = false;
 		})
 		
+		//Death behaviours
+		.bind("PitFall", function() {
+
+			this.trigger("PlayerDies");
+
+		})
+		
+		.bind("PlayerDies", function(){
+				this.trigger("SetScore");
+				Crafty.trigger("GameOver");
+
+		})
 		.bind("ResetPlayer", function() {
+			
+			//TODO: Update init values
 			this.attr({
 				x : this.edge_distance,
 				y : 190,
