@@ -2,22 +2,22 @@ Crafty.c("Background", {
 
 	init: function(){
 		      var backgroundSpeed = 1;
-		      var midgroundSpeed = 3;
 		      var backgroundWidth = 480;
 		      var backgroundHeight = 160;
-		      var midgroundWidth = 480;
+		      
+		      var shiftParallax = 0;
 
-		      this.addComponent("2D, DOM, Image").image("assets/background.png", "repeat-x")
-			//.attr({x:0, y:0, w: Crafty.viewport.width, h:320 })
-			.attr({x:0, y:0, w: Crafty.viewport.width*2, h:160 })
+		      this.addComponent("2D, DOM, Image")
+		      .image("assets/background.png", "repeat-x")
+				.attr({x:0, y:220, w: backgroundWidth*3, h:320 })
 
 			.bind("EnterFrame", function(){
-				//Crafty.viewport.scroll('y',this.y + 10);
-				this.x -= backgroundSpeed;
-				if(this.x <= -backgroundWidth)
+				this.x =  - Crafty.viewport.x + shiftParallax;
+				shiftParallax = shiftParallax - backgroundSpeed ;
+				
+				if(shiftParallax < -backgroundWidth)
 				{
-				 //this.x = Crafty.viewport.width;
-				 this.x = 0;
+					shiftParallax = 0;
 				}
 			});
 
@@ -27,28 +27,31 @@ Crafty.c("Background", {
 Crafty.c("Midground", {
 
 	init: function(){
-		      var backgroundSpeed = 1;
-		      var midgroundSpeed = 3;
-		      var backgroundWidth = 480;
-		      var backgroundHeight = 160;
+		      var midgroundSpeed = 2;
 		      var midgroundWidth = 480;
+		      
+		      var shiftParallax = 0;
 
 
-			this.addComponent("2D, DOM, Image").image("assets/midground1.png", "repeat-x")
-			.attr({x:0, y: backgroundHeight/2-25, w: Crafty.viewport.width*2, h:480 })
+			this.addComponent("2D, DOM, Image")
+			.image("assets/midground1.png","repeat-x")
+			.attr({x:0, y: 600-320,w:midgroundWidth*3, h:320})
 
 
 			.bind("EnterFrame", function(){
-				this.x -= midgroundSpeed;
-				if(this.x <= -midgroundWidth)
+				//this.x = this.x + Crafty.viewport.x + midgroundSpeed;
+				this.x =  - Crafty.viewport.x + shiftParallax;
+				shiftParallax = shiftParallax - midgroundSpeed ;
+				
+				if(shiftParallax < -midgroundWidth)
 				{
-				 //this.x = Crafty.viewport.width;
-				 this.x = 0;
+					shiftParallax = 0;
 				}
 			});
 
 	      }
 });
+
 
 Crafty.c("SplashBackground", {
 	init: function(){
