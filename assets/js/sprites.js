@@ -10,12 +10,9 @@ Crafty.sprite(15,"assets/floor2-middle.png",{
 	floor: [0,0]
 });
 
-//Crafty.sprite(16,"interactive-obstacles.png",{
-//	box1: [0,0],
-//	box2: [0,1],
-//	chair:	[0,2],
-//	cabinet: [0,3]	
-//});
+Crafty.sprite( "assets/img/dummy-bunch.png",{
+	rabidSprite: [0,0,120,190]
+})
 
 Crafty.sprite("assets/img/hud-numbers.png",{
 	num0: [0,0,12,16],

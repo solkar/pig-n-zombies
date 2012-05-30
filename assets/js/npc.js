@@ -134,15 +134,13 @@ Crafty.c("RabidBunch", {
 	dash: false,
 	x_shift: -110,
 	init: function(){
-		this.addComponent("2D, DOM, Image, Gravity, Collision")
+		this.addComponent("2D, DOM, rabidSprite, Gravity, Collision")
 			.gravity("Platform")
-			.image("assets/img/dummy-bunch.png")
-			.attr( {x: -110,y: 300, h: 120, w: 190})	
+			.attr( {x: -110,y: 300})	
 			.collision()
 			.bind("EnterFrame",function(frame){
 				//this.x = 0 - Crafty.viewport.x;
-				this.x = this.x_shift - Crafty.viewport.x;
-				
+				this.x = this.x_shift - Crafty.viewport.x;				
 				
 				//Run visual effect
 				if(frame.frame % 16 === 0){
@@ -159,6 +157,7 @@ Crafty.c("RabidBunch", {
 				
 			})	
 			
+		//Platform support RabidBunch and it never falls	
 		.onHit("Platform", function(hit) {                                                                                                                                                                 	          	
 			//Avoid Bunch from falling dawn
           for (var i = 0; i < hit.length; i++) {
