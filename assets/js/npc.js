@@ -210,8 +210,7 @@ Crafty.c("Chainsaw", {
 	descendHeight: 70,//0,
 	
 	init: function(){
-		this.addComponent("2D, DOM, Image, Flicker, Rumble, Collision")
-			.image("assets/img/dummy-chainsaw.png")
+		this.addComponent("2D, DOM, chainsawSprite, Flicker, Rumble, Collision")
 			.attr( {x: this.ceilingPosition,
 				y: -this.assetHeight, 
 				h: this.assetHeight, 

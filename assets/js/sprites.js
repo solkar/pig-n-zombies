@@ -14,6 +14,10 @@ Crafty.sprite( "assets/img/dummy-bunch.png",{
 	rabidSprite: [0,0,120,190]
 })
 
+Crafty.sprite( "assets/img/dummy-chainsaw.png",{
+	chainsawSprite: [0,0,70,240]
+})
+
 Crafty.sprite("assets/img/hud-numbers.png",{
 	num0: [0,0,12,16],
 	num1: [12,0,8,16],
