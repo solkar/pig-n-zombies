@@ -29,42 +29,6 @@ Crafty.c("Midground", {
 	      }
 });
 
-
-Crafty.c("SplashBackground", {
-	init: function(){
-			//Add transparency
-		     // var stage = $('#cr-stage')
-		//		.addClass('transparent');
-
-
-		      this.addComponent("2D, DOM, Image")
-			.image("assets/bomb.png")
-			//TODO: create transparent foreground
-			
-			//TODO: shown punctuation
-			
-			//TODO: Game Over message
-
-			//TODO:Remove screen when key is pressed
-			.bind("KeyDown", function(e){ 
-			      if (e.keyCode === Crafty.keys.SPACE){
-				     
-				     Crafty.scene("Stage1");
-				     // Crafty.trigger("Reset");
-				     $('#cr-stage').removeClass('transparent');
-
-				     //UNPAUSE the game
-				     //Crafty.init(); //Doesn't  work
-				     //Crafty.trigger("EnterFrame"); //Doesn't work
-				     //Crafty.unpause();//NG
-
-			      } 
-		      
-		      });
-
-	      }
-});
-
 Crafty.c("Obstacle", {
 	init: function(){
 		this.addComponent("DOM, Flicker, Blown, Collision") //Image is loaded with the tilemap
