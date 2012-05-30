@@ -241,6 +241,10 @@ Crafty.c("Player", {
 		.bind("PlayerDies", function(){
 				this.trigger("SetScore");
 				Crafty.trigger("GameOver");
+				
+				this.delay(function(){
+					this.destroy();
+				},1000);
 
 		})
 		.bind("ResetPlayer", function() {
