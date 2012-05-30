@@ -34,7 +34,6 @@ Crafty.scene("WelcomeScreen",function(){
 });
 
 
-
 Crafty.scene("Stage1", function(){
 	var tileMapwidth = 32*1000; //tile pixel width * number of tiles
 	var scrollSpeed = 4;//TODO: sync initial speed with Player
@@ -96,7 +95,7 @@ Crafty.scene("Stage1", function(){
 	Crafty.bind("GameOver",function(){
 		//Reload Scene
 		//Crafty.scene("Level1");
-
+		
 		Crafty.pause(true);
 		
 		//TODO: stop animations
@@ -106,8 +105,8 @@ Crafty.scene("Stage1", function(){
 		//TODO: stop Parallax scroll
 		tileMap.unbind("EnterFrame"); //Stop TileMap scroll
 
+		Crafty.e("SceneReset");
 		//Load Splash screen
-		Crafty.e("SplashBackground");
 		$('#cr-stage').addClass('transparent'); //Shade current screen
 
 		//TODO: Laod game over banner
@@ -121,8 +120,9 @@ Crafty.scene("Stage1", function(){
 			Crafty(scoreDisplayId[i]).shift(-100,+400);
 		}
 		
-		
-		//rabid.pause(); //Stop RabiBunch animation
+
+		//Crafty.scene("Loading");
+
 		
 	});
 	
@@ -132,9 +132,6 @@ Crafty.scene("Stage1", function(){
 	* Score is passed as string
 	* @trigger 
 	*/
-	
-
-
 	Crafty.bind("UpdateScore", function(score){
 		//Wipe out HUD
 		Crafty("HUD").destroy();

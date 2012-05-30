@@ -191,3 +191,18 @@ Crafty.c("Platform", {
         this.collision();    
     }   
 });
+
+Crafty.c("SceneReset",{
+	init: function(){
+		this.addComponent("DOM, 2D, Image")
+		.bind("KeyDown", function(e){ 
+      		if (e.keyCode === Crafty.keys.SPACE){
+      			
+      			Crafty.scene("Stage1");
+			     $('#cr-stage').removeClass('transparent');
+			   	//Crafty.unbind("KeyDown",0);
+				
+      		} 
+     	 })
+	}
+});
