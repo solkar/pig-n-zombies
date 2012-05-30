@@ -5,21 +5,11 @@ Crafty.c("Background", {
 		      var backgroundWidth = 480;
 		      var backgroundHeight = 160;
 		      
-		      var shiftParallax = 0;
-
-		      this.addComponent("2D, DOM, Image")
-		      .image("assets/background.png", "repeat-x")
+			
+			this.addComponent("2D, DOM, Image, Parallax")
+				.image("assets/background.png", "repeat-x")
 				.attr({x:0, y:220, w: backgroundWidth*3, h:320 })
-
-			.bind("EnterFrame", function(){
-				this.x =  - Crafty.viewport.x + shiftParallax;
-				shiftParallax = shiftParallax - backgroundSpeed ;
-				
-				if(shiftParallax < -backgroundWidth)
-				{
-					shiftParallax = 0;
-				}
-			});
+				.parallax(backgroundSpeed,backgroundWidth);
 
 	      }
 });
@@ -30,24 +20,11 @@ Crafty.c("Midground", {
 		      var midgroundSpeed = 2;
 		      var midgroundWidth = 480;
 		      
-		      var shiftParallax = 0;
 
-
-			this.addComponent("2D, DOM, Image")
+			this.addComponent("2D, DOM, Image, Parallax")
 			.image("assets/midground1.png","repeat-x")
 			.attr({x:0, y: 600-320,w:midgroundWidth*3, h:320})
-
-
-			.bind("EnterFrame", function(){
-				//this.x = this.x + Crafty.viewport.x + midgroundSpeed;
-				this.x =  - Crafty.viewport.x + shiftParallax;
-				shiftParallax = shiftParallax - midgroundSpeed ;
-				
-				if(shiftParallax < -midgroundWidth)
-				{
-					shiftParallax = 0;
-				}
-			});
+			.parallax(midgroundSpeed,midgroundWidth);
 
 	      }
 });

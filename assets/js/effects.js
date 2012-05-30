@@ -69,3 +69,25 @@ Crafty.c("Rumble",{
 		
 	}
 })
+
+Crafty.c("Parallax",{
+	_speed: 0,
+	_width: 0,
+	_parallaxShift: 0,
+	parallax: function(speed, width){
+		this.requires("2D");
+		this._speed = speed;
+		this._width = width;
+		
+		this.bind("EnterFrame", function(){
+				this.x =  - Crafty.viewport.x + this._parallaxShift;
+				this._parallaxShift = this._parallaxShift - this._speed ;
+				
+				if(this._parallaxShift < -this._width)
+				{
+					this._parallaxShift = 0;
+				}
+			});
+		
+	}
+})
