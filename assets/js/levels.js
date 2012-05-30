@@ -19,13 +19,15 @@ Crafty.scene("WelcomeScreen",function(){
 	
 	
 	//Crafty.scene("Stage1");
-	this.bind("KeyDown", function(e){ 
+	Crafty.bind("KeyDown", function(e){ 
       if (e.keyCode === Crafty.keys.SPACE){
 	     
-	     Crafty.scene("Stage1");
+
 	     // Crafty.trigger("Reset");
 	     $('#cr-stage').removeClass('transparent');
-
+		Crafty.unbind("KeyDown",0);
+		
+		Crafty.scene("Stage1");
       } 
   
   });
