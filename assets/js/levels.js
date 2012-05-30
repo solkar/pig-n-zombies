@@ -29,7 +29,6 @@ Crafty.scene("Stage1", function(){
 	Crafty.viewport.x = 0;
 	
 
-	
 	//Current tilemap
 	//var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/jump_collision_test_level.json","");
 	var tileMap = Crafty.e("TiledLevel").tiledLevel("assets/tilemaps/test_level04.json","");	
@@ -46,7 +45,7 @@ Crafty.scene("Stage1", function(){
 			}
 		});
 		
-
+		
 	//New component to support gravity
 	Crafty.e("2D, DOM, Color, Below")
 		.attr({x:0, y:580, w:5, h:16})
@@ -70,7 +69,7 @@ Crafty.scene("Stage1", function(){
 	Crafty.e("Midground");
 	
 	Crafty.e("Chainsaw");
-	Crafty.e("RabidBunch");	
+	var rabid = Crafty.e("RabidBunch");	
 
 	//I am not sure it this is the best place for this logic
 	Crafty.bind("UpdateSceneSpeed",function(speed){
@@ -78,25 +77,37 @@ Crafty.scene("Stage1", function(){
 		scrollSpeed = speed;
 	});
 
-	Crafty.bind("GameOver",function(score){
+	Crafty.bind("GameOver",function(){
 		//Reload Scene
 		//Crafty.scene("Level1");
 
 		Crafty.pause(true);
+		
 		//TODO: stop animations
 		player.trigger("PausePlayer");
 
-		//Reset viewport
-		Crafty.viewport.x = 0;
-		tileMap.unbind("EnterFrame");
+		
+		//TODO: stop Parallax scroll
+		tileMap.unbind("EnterFrame"); //Stop TileMap scroll
 
 		//Load Splash screen
 		Crafty.e("SplashBackground");
-		//.attr({z:1});
-		
-		$('#cr-stage').addClass('transparent');
+		$('#cr-stage').addClass('transparent'); //Shade current screen
 
-		//Crafty.scene("SplashScreen");
+		//TODO: Laod game over banner
+		Crafty.e("2D, DOM, Image")
+			.attr({x: 200 - Crafty.viewport.x, y: 200})
+			.image("assets/img/gameover.png");
+			
+		//TODO: Shift score display
+		var scoreDisplayId = Crafty("HUD");
+		for(var i = 0; i < scoreDisplayId.length; i++){
+			Crafty(scoreDisplayId[i]).shift(-100,+400);
+		}
+		
+		
+		//rabid.pause(); //Stop RabiBunch animation
+		
 	});
 	
 	 /**@
@@ -124,8 +135,6 @@ Crafty.scene("Stage1", function(){
 				, y:60})
 			.addComponent("num"+score[score.length - 1 - i]); //Don't like the -1
 		}
-		
-		//TODO: Stop counting when game is paused
 		
 	});
 
