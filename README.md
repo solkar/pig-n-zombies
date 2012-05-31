@@ -1,8 +1,9 @@
-pig-n-zombies
+Pig'N'Zombies
+by Karlos Zafra
 =============
 
-A game implemented with CraftyJs engine.
+Pig'N'Zombies (PnZ) is a platform game developed with CraftyJs engine. The gameplay is "inspired" in Canabalt (by Adam Atomic & Danny Baranowsky). The purpose of this project is to develop my skills as game designer and programmer. Advice, comment and/or hatemail is welcome.
 
-Right now many of the assets are taken directly from Canabalt. All the rights over that material are property of Semisecret Software (http://www.semisecretsoftware.com).
+*** DEVELOPMENT LOG ***
 
-[30/May/2012] v0.1 First version for play testing
+v0.1 [30-May-2012] First version released for play testing
